@@ -1,8 +1,12 @@
-#pragma once
+#ifndef _CGAME_H_
+#define _CGAME_H_
 
-#include "SceneManager.h"
-#include "CGraphics.h"
+#include "ConfigSystem.h"
 
+MY_NAMESPACE_BEGIN
+
+class SceneManager;
+class RenderManager;
 
 class CGame
 {
@@ -16,6 +20,10 @@ public:
 	bool IsEnd();
 private:
 	bool			m_endFlag;
-	SceneManager	m_sceneMng;
-	CGraphics		m_graphics;
+	SceneManager*	m_sceneMng;
+	RenderManager*	m_renderMng;
 };
+
+MY_NAMESPACE_END
+
+#endif

@@ -1,9 +1,27 @@
-#include "CGraphics.h"
-#include "RenderDevice.h"
+#include "RenderManager.h"
 
-LPDIRECT3DDEVICE9 RenderDevice::m_lpd3ddevice = nullptr;
+MY_NAMESPACE_BEGIN
 
-bool CGraphics::Init(HWND hwnd, bool fullscreenflag, int width, int height) {
+RenderManager::RenderManager() {
+	m_lpd3d = NULL;
+	m_lpd3ddevice = NULL;
+	m_adapter = 0;
+	m_width = 0;
+	m_height = 0;
+}
+
+RenderManager::~RenderManager() {
+	if (m_lpd3ddevice != NULL) {
+		m_lpd3ddevice->Release();
+		m_lpd3ddevice = NULL;
+	}
+	if (m_lpd3d != NULL) {
+		m_lpd3d->Release();
+		m_lpd3d = NULL;
+	}
+}
+
+bool RenderManager::Init(HWND hwnd, bool fullscreenflag, int width, int height) {
 	HRESULT	hr;
 
 	m_lpd3d = Direct3DCreate9(D3D_SDK_VERSION);	// Direct3D9インターフェース取得
@@ -54,19 +72,12 @@ bool CGraphics::Init(HWND hwnd, bool fullscreenflag, int width, int height) {
 			if (hr != D3D_OK)		return(false);
 		}
 	}
-
-	// グローバルで使用するためのRenderDeviceクラスに
-	// CreateDevice済みのデバイスをセット
-	RenderDevice::Set(m_lpd3ddevice);
 	m_height = height;
 	m_width = width;
-	return(true);
+	return true;
 }
 
-void CGraphics::Exit() {
-
-	RenderDevice::Set(nullptr);
-
+void RenderManager::Exit() {
 	if (m_lpd3ddevice != NULL) {
 		m_lpd3ddevice->Release();
 		m_lpd3ddevice = NULL;
@@ -75,5 +86,10 @@ void CGraphics::Exit() {
 		m_lpd3d->Release();
 		m_lpd3d = NULL;
 	}
-	return;
 }
+
+void RenderManager::Render() {
+
+}
+
+MY_NAMESPACE_END
