@@ -9,6 +9,12 @@ MY_NAMESPACE_BEGIN
 
 class SpriteBase;
 
+struct VertexInfo
+{
+	float x, y, z;
+	float tu, tv;
+};
+
 class RenderManager:public SingletonTemplate<RenderManager>
 {
 public:
@@ -28,6 +34,8 @@ public:
 private:
 	RenderManager();
 	~RenderManager();
+	void CleanUp();
+	void InStreamVertex();
 private:
 	LPDIRECT3D9					m_lpd3d;			// DIRECT3D8オブジェクト
 	LPDIRECT3DDEVICE9			m_lpd3ddevice;		// DIRECT3DDEVICE8オブジェクト
@@ -37,6 +45,7 @@ private:
 	int							m_width;			// バックバッファＸサイズ
 	int							m_height;			// バックバッファＹサイズ
 	std::vector<SpriteBase*>	m_drawList;
+	D3DXMATRIX					m_projection2D;		// 
 };
 
 MY_NAMESPACE_END

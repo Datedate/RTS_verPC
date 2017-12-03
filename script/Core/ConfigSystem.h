@@ -11,7 +11,7 @@
 static __TYPE__* create() \
 { \
     __TYPE__ *pRet = new __TYPE__(); \
-    if (pRet && pRet->init()) \
+    if (pRet && pRet->Init()) \
     { \
         return pRet; \
     } \

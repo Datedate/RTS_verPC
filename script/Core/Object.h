@@ -12,7 +12,7 @@ class Object
 public:
 	Object();
 	~Object();
-	virtual void Init();
+	virtual bool Init();
 	static Object* Create();
 	virtual void Update();
 	virtual void AddChild(Object*);

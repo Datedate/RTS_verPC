@@ -7,6 +7,8 @@ MY_NAMESPACE_BEGIN
 
 class SceneManager;
 class RenderManager;
+class EventManager;
+class AudioManager;
 
 class CGame
 {
@@ -20,8 +22,11 @@ public:
 	bool IsEnd();
 private:
 	bool			m_endFlag;
+
 	SceneManager*	m_sceneMng;
 	RenderManager*	m_renderMng;
+	EventManager*	m_eventMng;
+	AudioManager*	m_audioMng;
 };
 
 MY_NAMESPACE_END

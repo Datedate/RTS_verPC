@@ -11,7 +11,7 @@ Object::~Object() {
 }
 
 bool Object::Init() {
-
+	return true;
 }
 
 Object* Object::Create()

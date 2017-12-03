@@ -1,7 +1,7 @@
 #include "CGame.h"
-#include "input.h"
 #include "SceneManager.h"
 #include "RenderManager.h"
+#include "EventManager.h"
 
 MY_NAMESPACE_BEGIN
 
@@ -17,28 +17,29 @@ CGame::~CGame()
 bool CGame::Init(HWND _hwnd, HINSTANCE _hInstance, bool _fullscreen, int _screenX, int _screenY) {
 	m_sceneMng = SceneManager::GetInstance();
 	m_renderMng = RenderManager::GetInstance();
+	m_eventMng = EventManager::GetInstance();
 
 	// 入力デバイス初期化
-	if (FAILED(InitInput(_hInstance, _hwnd)))
-		return FALSE;
+	if (m_eventMng->Init(_hInstance,_hwnd))
+		return false;
 	// 描画クラスの初期化
 	if (!m_renderMng->Init(_hwnd, _fullscreen, _screenX, _screenY))
-		return FALSE;
+		return false;
 	// シーンマネージャーの初期化
 	m_sceneMng->InitScene();
 	return true;
 }
 
 void CGame::Exec() {
-	UpdateInput();
+	m_eventMng->Excute();
 	m_sceneMng->Update();
 	m_renderMng->Render();
 }
 
 void CGame::Exit() {
-	m_sceneMng->Exit();
+	m_eventMng->Exit();
 	m_renderMng->Exit();
-	UninitInput();
+	m_sceneMng->Exit();
 }
 
 void CGame::SetEndFlag() {
