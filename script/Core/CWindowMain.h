@@ -2,13 +2,14 @@
 #include <Windows.h>
 #include "CGame.h"
 #include <thread>
+
 //-----------------------------------------------------------------------------
 // マクロの定義
 //-----------------------------------------------------------------------------
 #define		NAME			"win32A"
 #define		TITLE			"RTS"
-#define		SCREEN_X		1280
-#define		SCREEN_Y		720
+#define		SCREEN_X		656
+#define		SCREEN_Y		959
 #define		FULLSCREEN		0				// フルスクリーンフラグ
 
 //-----------------------------------------------------------------------------
@@ -43,3 +44,5 @@ private:
 private:
 	CGame m_game;					// ゲームの中枢クラス
 };
+
+

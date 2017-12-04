@@ -1,12 +1,11 @@
-#include "EventManager.h"
+
 #include "InputManager.h"
+#include "EventManager.h"
 #include "EventListener.h"
 #include "EventMouseListener.h"
 #include "EventKeyListener.h"
 #include "EventMouseInfo.h"
 #include "EventKeyInfo.h"
-
-MY_NAMESPACE_BEGIN
 
 EventManager::EventManager() {}
 EventManager::~EventManager() {}
@@ -112,4 +111,3 @@ void EventManager::Exit() {
 	m_inputMng->Exit();
 	m_eventContainer.clear();
 }
-MY_NAMESPACE_END

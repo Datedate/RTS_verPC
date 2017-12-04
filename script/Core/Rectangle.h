@@ -1,10 +1,6 @@
 #ifndef _VECTOR2_H_
 #define _VECTOR2_H_
 
-#include "ConfigSystem.h"
-
-MY_NAMESPACE_BEGIN
-
 class Vector2
 {
 public:
@@ -94,7 +90,7 @@ class Size
 public:
 	Size() { width = 0;height = 0; };
 	Size(float _width, float _height) { width = _width; height = _height; }
-	~Size();
+	~Size() {};
 	void Set(float _width, float _height) {
 		this->width = _width;
 		this->height = _height;
@@ -232,7 +228,5 @@ private:
 	Vector2 origin;
 	Size	size;
 };
-
-MY_NAMESPACE_END
 
 #endif

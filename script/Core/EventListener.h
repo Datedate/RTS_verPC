@@ -5,8 +5,6 @@
 #include "ConfigSystem.h"
 #include <string>
 
-MY_NAMESPACE_BEGIN
-
 class EventInfo;
 class Object;
 
@@ -29,6 +27,7 @@ public:
 	void SetEnabled(bool enabled) { m_isEnabled = enabled; }
 	bool IsEnabled() const { return m_isEnabled; }
 	void SetTarget(Object* _target);
+	Object* GetTarget()const;
 protected:
 	void SetPaused(bool paused);
 	bool IsPaused() const;
@@ -52,6 +51,4 @@ protected:
 	Object*							m_target;
 };
 
-
-MY_NAMESPACE_END
 #endif

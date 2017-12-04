@@ -4,8 +4,6 @@
 #include "EventInfo.h"
 #include "Rectangle.h"
 
-MY_NAMESPACE_BEGIN
-
 class EventMouseInfo : public EventInfo
 {
 public:
@@ -28,5 +26,4 @@ private:
 	Vector2			m_pos;
 };
 
-MY_NAMESPACE_END
 #endif

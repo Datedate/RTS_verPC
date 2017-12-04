@@ -1,6 +1,5 @@
 #include "SceneManager.h"
-
-MY_NAMESPACE_BEGIN
+#include "../PrototypeScene/PrototypeScene.h"
 
 SceneManager::SceneManager()
 {
@@ -10,10 +9,10 @@ SceneManager::~SceneManager()
 {
 }
 
-void SceneManager::InitScene() {		
+void SceneManager::Init(float _sizeWidth,float _sizeHeight) {		
 //	m_scenes.push_back(new TitleScene());
 
-	m_currentscene = m_scenes.at(0);
+	m_currentscene = PrototypeScene::Create();
 }
 
 void SceneManager::Update() {
@@ -58,6 +57,10 @@ void SceneManager::PopScene() {
 	*/
 }
 
+Size SceneManager::GetDisplaySize()const {
+	return m_displaySize;
+}
+
 void SceneManager::NextScene() {
 	if (m_nextscene != nullptr) {
 		delete m_currentscene;
@@ -65,5 +68,3 @@ void SceneManager::NextScene() {
 		m_nextscene = nullptr;
 	}
 }
-
-MY_NAMESPACE_END

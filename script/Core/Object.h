@@ -1,11 +1,9 @@
 #ifndef _OBJECT_H_
 #define _OBJECT_H_
 
-#include "ConfigSystem.h""
+#include "ConfigSystem.h"
 #include <vector>
 #include <string>
-
-MY_NAMESPACE_BEGIN
 
 class Object
 {
@@ -16,11 +14,20 @@ public:
 	static Object* Create();
 	virtual void Update();
 	virtual void AddChild(Object*);
+	virtual void AddChild(Object*, int _zorder);
+	virtual void RemoveAllChildren();
+	virtual void RemoveChild();
+	virtual void RemoveChild(std::string _childname);
 	virtual void Release();
 	void SetName(std::string _name) { m_name = _name; }
 	void SetZOrder(int _z) { m_zorder = _z; }
 	void SetVisible(bool _flag) { m_visible = _flag; }
 	void Exit();
+
+	Object* GetParent()const;
+	bool IsVisible()const;
+	std::string GetName()const;
+	int GetOrder()const;
 protected:
 	void SetParent(Object*);
 protected:
@@ -30,7 +37,5 @@ protected:
 	std::string				m_name;
 	int						m_zorder;
 };
-
-MY_NAMESPACE_END
 
 #endif

@@ -1,6 +1,5 @@
 #include "RenderManager.h"
 #include "SpriteBase.h"
-MY_NAMESPACE_BEGIN
 
 RenderManager::RenderManager() {
 	m_lpd3d = NULL;
@@ -77,8 +76,8 @@ bool RenderManager::Init(HWND hwnd, bool fullscreenflag, int width, int height) 
 
 
 	D3DXMATRIX proj(
-		2/width , 0.0f , 0.0f , 0.0f,
-		0.0f , -2/height, 0.0f , 0.0f,
+		2.0f/width , 0.0f , 0.0f , 0.0f,
+		0.0f , -2.0f/height, 0.0f , 0.0f,
 		0.0f , 0.0f , 1.0f , 0.0f,
 		0.0f , 0.0f , 0.0f , 1.0f
 	);
@@ -100,7 +99,7 @@ void RenderManager::Exit() {
 }
 
 void RenderManager::Render() {
-	m_lpd3ddevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+	m_lpd3ddevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 	m_lpd3ddevice->BeginScene();
 
 	InStreamVertex();
@@ -139,4 +138,3 @@ void RenderManager::InStreamVertex() {
 		m_lpd3ddevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2,info ,sizeof(VertexInfo));
 	}
 }
-MY_NAMESPACE_END

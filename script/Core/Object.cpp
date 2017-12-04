@@ -1,7 +1,5 @@
 #include "Object.h"
 
-MY_NAMESPACE_BEGIN
-
 Object::Object() {
 
 }
@@ -32,6 +30,14 @@ void Object::AddChild(Object* _child) {
 	m_children.push_back(_child);
 }
 
+void Object::AddChild(Object* _child, int _zorder) {
+	_child->SetZOrder(_zorder);
+	AddChild(_child);
+}
+
+void Object::RemoveAllChildren() {}
+void Object::RemoveChild() {}
+void Object::RemoveChild(std::string _childname) {}
 void Object::Release() {
 
 }
@@ -50,4 +56,21 @@ void Object::Exit() {
 
 	Release();
 }
-MY_NAMESPACE_END
+
+Object* Object::GetParent()const {
+	if (m_parent == nullptr)
+		return nullptr;
+	return m_parent;
+}
+
+bool Object::IsVisible()const {
+	return m_visible;
+}
+
+std::string Object::GetName()const {
+	return m_name;
+}
+
+int Object::GetOrder()const {
+	return m_zorder;
+}

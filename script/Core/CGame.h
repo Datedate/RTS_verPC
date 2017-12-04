@@ -2,8 +2,7 @@
 #define _CGAME_H_
 
 #include "ConfigSystem.h"
-
-MY_NAMESPACE_BEGIN
+#include <Windows.h>
 
 class SceneManager;
 class RenderManager;
@@ -28,7 +27,5 @@ private:
 	EventManager*	m_eventMng;
 	AudioManager*	m_audioMng;
 };
-
-MY_NAMESPACE_END
 
 #endif

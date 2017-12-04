@@ -3,14 +3,12 @@
 
 #include "EventListener.h"
 
-MY_NAMESPACE_BEGIN
-
 class EventKeyInfo;
 
 class EventKeyListener : public EventListenerBase
 {
 public:
-	EventKeyListener() {};
+	EventKeyListener() ;
 	~EventKeyListener() {};
 
 	static const std::string EVENT_NAME;
@@ -25,7 +23,5 @@ public:
 	bool Init();
 };
 
-
-MY_NAMESPACE_END
 
 #endif

@@ -1,7 +1,5 @@
 #include "EventKeyInfo.h"
 
-MY_NAMESPACE_BEGIN
-
 EventKeyInfo::EventKeyInfo(EventKeyInfo::KeyEventType _type) {
 	m_keyType = _type;
 }
@@ -17,4 +15,3 @@ void EventKeyInfo::SetKeyState(BYTE* _keyState) {
 BYTE* EventKeyInfo::GetKeyState() const{
 	return m_keyState;
 }
-MY_NAMESPACE_END

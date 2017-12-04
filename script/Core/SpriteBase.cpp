@@ -1,6 +1,5 @@
 #include "SpriteBase.h"
 #include "RenderManager.h"
-MY_NAMESPACE_BEGIN
 
 SpriteBase::SpriteBase() {
 }
@@ -40,10 +39,12 @@ SpriteBase*	SpriteBase::Create(std::string _name) {
 
 bool SpriteBase::Init() {
 	m_rect = Rect(0, 0, 100, 100);
-	m_uv = m_tv = 0.0f;
-	m_uvWidth = m_tvHeight = 1.0f;
+	m_tu = m_tv = 0.0f;
+	m_tuWidth = m_tvHeight = 1.0f;
 	m_tex = NULL;
 	m_drawFlag = true;
+
+	return true;
 }
 
 void SpriteBase::Update() {
@@ -75,6 +76,3 @@ void SpriteBase::Draw() {
 	auto Render = RenderManager::GetInstance();
 	Render->PushDraw(this);
 }
-
-
-MY_NAMESPACE_END

@@ -1,8 +1,6 @@
 #include "EventListener.h"
 #include "Object.h"
 
-MY_NAMESPACE_BEGIN
-
 EventListenerBase::EventListenerBase()
 {}
 
@@ -17,6 +15,7 @@ bool EventListenerBase::Init(EVENT_ID _id, const std::string& _eventName, const 
 	m_isRegistered = false;
 	m_paused = true;
 	m_isEnabled = true;
+	return true;
 }
 void EventListenerBase::SetTarget(Object* _target) {
 	m_target = _target;
@@ -48,5 +47,3 @@ void EventListenerBase::SetPriority(int _priority) {
 int EventListenerBase::GetdPriority() const {
 	return m_priority;
 }
-
-MY_NAMESPACE_END

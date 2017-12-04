@@ -3,8 +3,6 @@
 #include "RenderManager.h"
 #include "EventManager.h"
 
-MY_NAMESPACE_BEGIN
-
 CGame::CGame()
 {
 	
@@ -20,13 +18,13 @@ bool CGame::Init(HWND _hwnd, HINSTANCE _hInstance, bool _fullscreen, int _screen
 	m_eventMng = EventManager::GetInstance();
 
 	// 入力デバイス初期化
-	if (m_eventMng->Init(_hInstance,_hwnd))
+	if (!m_eventMng->Init(_hInstance,_hwnd))
 		return false;
 	// 描画クラスの初期化
 	if (!m_renderMng->Init(_hwnd, _fullscreen, _screenX, _screenY))
 		return false;
 	// シーンマネージャーの初期化
-	m_sceneMng->InitScene();
+	m_sceneMng->Init(_screenX,_screenY);
 	return true;
 }
 
@@ -49,5 +47,3 @@ void CGame::SetEndFlag() {
 bool CGame::IsEnd() {
 	return m_endFlag;
 }
-
-MY_NAMESPACE_END

@@ -4,8 +4,7 @@
 #include "SingletonTemplate.h"
 #include <d3dx9.h>
 #include <vector>
-
-MY_NAMESPACE_BEGIN
+#include "ConfigSystem.h"
 
 class SpriteBase;
 
@@ -47,7 +46,5 @@ private:
 	std::vector<SpriteBase*>	m_drawList;
 	D3DXMATRIX					m_projection2D;		// 
 };
-
-MY_NAMESPACE_END
 
 #endif

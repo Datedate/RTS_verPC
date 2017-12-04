@@ -1,8 +1,6 @@
 #include "EventKeyListener.h"
 #include "EventKeyInfo.h"
 
-MY_NAMESPACE_BEGIN
-
 const std::string EventKeyListener::EVENT_NAME = "Keyboard_Name";
 
 EventKeyListener* EventKeyListener::Create()
@@ -33,9 +31,7 @@ EventKeyListener::EventKeyListener()
 	: m_onKeyDown(nullptr)
 	, m_onKeyUp(nullptr)
 	, m_onKeyPress(nullptr)
-{
-
-}
+{}
 
 bool EventKeyListener::Init() {
 	auto listener = [this](EventInfo* event) {
@@ -66,5 +62,3 @@ bool EventKeyListener::Init() {
 
 	return false;
 }
-
-MY_NAMESPACE_END

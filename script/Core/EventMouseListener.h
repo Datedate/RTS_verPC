@@ -3,14 +3,12 @@
 
 #include "EventListener.h"
 
-MY_NAMESPACE_BEGIN
-
 class EventMouseInfo;
 
 class EventMouseListener : public EventListenerBase
 {
 public:
-	EventMouseListener() {};
+	EventMouseListener() ;
 	~EventMouseListener() {};
 
 	static const std::string EVENT_NAME;
@@ -25,7 +23,5 @@ public:
 
 	bool Init();
 };
-
-MY_NAMESPACE_END
 
 #endif

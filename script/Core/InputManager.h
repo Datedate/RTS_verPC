@@ -1,13 +1,11 @@
 #ifndef _INPUT_MANAGER_H_
 #define _INPUT_MANAGER_H_
 
+#define DIRECTINPUT_VERSION 0x0800
+
 #include <dinput.h>
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "dinput8.lib")
-
-#include "ConfigSystem.h"
-
-MY_NAMESPACE_BEGIN
 
 const int NUM_KEY_MAX = 256;
 
@@ -213,7 +211,5 @@ private:
 	POINT					m_mousePos;
 	HWND					m_hwnd;
 };
-
-MY_NAMESPACE_END
 
 #endif

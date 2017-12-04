@@ -3,10 +3,8 @@
 
 #include <vector>
 #include <string>
-#include <minidrv.h>
+#include <Windows.h>
 #include "SingletonTemplate.h"
-
-MY_NAMESPACE_BEGIN
 
 class EventListenerBase;
 class InputManager;
@@ -34,7 +32,5 @@ private:
 	std::vector<EventListenerBase*> m_eventContainer;
 	InputManager*					m_inputMng;
 };
-
-MY_NAMESPACE_END
 
 #endif

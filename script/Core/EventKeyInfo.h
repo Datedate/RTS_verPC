@@ -2,8 +2,7 @@
 #define _EVENT_KEY_INFO_H_
 
 #include "EventInfo.h"
-#include <minidrv.h>
-MY_NAMESPACE_BEGIN
+#include <Windows.h>
 
 class EventKeyInfo : public EventInfo
 {
@@ -26,7 +25,5 @@ private:
 	KeyEventType	m_keyType;
 };
 
-
-MY_NAMESPACE_END
 
 #endif

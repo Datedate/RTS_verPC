@@ -1,8 +1,6 @@
 #include "EventMouseListener.h"
 #include "EventMouseInfo.h"
 
-MY_NAMESPACE_BEGIN
-
 const std::string EventMouseListener::EVENT_NAME= "Mouse_Name";
 
 EventMouseListener* EventMouseListener::Create()
@@ -36,9 +34,8 @@ EventMouseListener::EventMouseListener()
 	, m_onMouseUp(nullptr)
 	, m_onMouseMove(nullptr)
 	, m_onMouseScroll(nullptr)
-{
+{}
 
-}
 
 bool EventMouseListener::Init() {
 	auto listener = [this](EventInfo* event) {
@@ -73,5 +70,3 @@ bool EventMouseListener::Init() {
 
 	return false;
 }
-
-MY_NAMESPACE_END

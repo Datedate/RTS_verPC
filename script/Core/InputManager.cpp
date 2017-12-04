@@ -1,7 +1,5 @@
 #include "InputManager.h"
 
-MY_NAMESPACE_BEGIN
-
 bool InputManager::Init(HINSTANCE _hInstance, HWND _hwnd) {
 	bool    initflag = true;
 
@@ -236,5 +234,3 @@ long InputManager::GetMouseCurrentX() {
 long InputManager::GetMouseCurrentY() {
 	return m_mousePos.y;
 }
-
-MY_NAMESPACE_END

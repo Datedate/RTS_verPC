@@ -6,8 +6,6 @@
 #include <string>
 #include <d3dx9.h>
 
-MY_NAMESPACE_BEGIN
-
 class SpriteBase:public Object
 {
 public:
@@ -36,7 +34,5 @@ private:
 	LPDIRECT3DTEXTURE9		m_tex;
 	bool	m_drawFlag;
 };
-
-MY_NAMESPACE_END
 
 #endif

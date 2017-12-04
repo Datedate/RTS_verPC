@@ -3,8 +3,6 @@
 
 #include "ConfigSystem.h"
 
-MY_NAMESPACE_BEGIN
-
 class Object;
 
 class EventInfo {
@@ -46,7 +44,5 @@ protected:
 	bool	   m_flag;
 	Object*	   m_target;
 };
-
-MY_NAMESPACE_END
 
 #endif

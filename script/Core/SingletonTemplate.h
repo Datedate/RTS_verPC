@@ -1,24 +1,24 @@
 #ifndef _SINGLETON_TEMPLATE_H_
 #define _SINGLETON_TEMPLATE_H_
 
-#include "ConfigSystem.h"
-
-MY_NAMESPACE_BEGIN
-
 template<class T>
 
 class SingletonTemplate
 {
 public:
-	static T *GetInstance();
+	static T* GetInstance() {
+		static T *instance = nullptr;
+		if (instance == nullptr) {
+			instance = new T();
+		}
+		return instance;
+	}
 protected:
 	SingletonTemplate() {};
 	~SingletonTemplate() {};
 private:
 	SingletonTemplate(const SingletonTemplate&);
-	const SingletonTemplate &operator=(const SingletomTemplate&);
+	const SingletonTemplate &operator=(const SingletonTemplate&) ;
 };
-
-MY_NAMESPACE_END
 
 #endif
