@@ -77,12 +77,26 @@ bool RenderManager::Init(HWND hwnd, bool fullscreenflag, int width, int height) 
 
 	D3DXMATRIX proj(
 		2.0f/width , 0.0f , 0.0f , 0.0f,
-		0.0f , -2.0f/height, 0.0f , 0.0f,
+		0.0f , 2.0f/height, 0.0f , 0.0f,
 		0.0f , 0.0f , 1.0f , 0.0f,
-		0.0f , 0.0f , 0.0f , 1.0f
+		-1.0f , -1.0f , 0.0f , 1.0f
 	);
 
 	m_projection2D = proj;
+
+	m_lpd3ddevice->SetTransform(D3DTS_PROJECTION, &proj);
+	// Ｚバッファ有効
+	m_lpd3ddevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+	// ライト有効
+	m_lpd3ddevice->SetRenderState(D3DRS_LIGHTING, true);
+	// カリング無効化
+	m_lpd3ddevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	// 環境光セット
+	m_lpd3ddevice->SetRenderState(D3DRS_AMBIENT, 0xffffffff);
+	//アルファ画像によるブレンド
+	//g_DXGrobj->GetDXDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	//g_DXGrobj->GetDXDevice()->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	//g_DXGrobj->GetDXDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	return true;
 }
@@ -99,7 +113,7 @@ void RenderManager::Exit() {
 }
 
 void RenderManager::Render() {
-	m_lpd3ddevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+	m_lpd3ddevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	m_lpd3ddevice->BeginScene();
 
 	InStreamVertex();
@@ -110,31 +124,37 @@ void RenderManager::Render() {
 }
 
 void RenderManager::CleanUp() {
-	m_drawList.clear();
+	//m_drawList.clear();
 }
 
 void RenderManager::InStreamVertex() {
+	if (m_drawList.empty()) return;
 	auto itr = m_drawList.begin();
+
+	m_lpd3ddevice->SetFVF(D3DFVF_XYZ);
 	for (;itr != m_drawList.end();++itr) {
 		if (!(*itr)->IsDrawFlag()) continue;
 
 		// 描画
-		m_lpd3ddevice->SetFVF(D3DFVF_XYZ);
-		m_lpd3ddevice->SetTransform(D3DTS_PROJECTION, &m_projection2D);
-
 		VertexInfo info[4];
 
-		info[0].x = info[3].x = (*itr)->GetRectangle().getMinX();
-		info[0].y = info[2].y = (*itr)->GetRectangle().getMinY();
-		info[1].x = info[2].x = (*itr)->GetRectangle().getMaxX();
-		info[1].y = info[3].y = (*itr)->GetRectangle().getMaxY();
+		info[0].x = info[1].x = (*itr)->GetRectangle().getMinX();
+		info[0].y = info[3].y = (*itr)->GetRectangle().getMinY();
+		info[2].x = info[3].x = (*itr)->GetRectangle().getMaxX();
+		info[1].y = info[2].y = (*itr)->GetRectangle().getMaxY();
 		info[0].z = info[1].z = info[2].z = info[3].z = 0.0f;
 
-		info[0].tu = info[3].tu = (*itr)->getMinTU();
-		info[0].tv = info[1].tv = (*itr)->getMinTV();
-		info[1].tu = info[2].tu = (*itr)->getMaxTU();
-		info[2].tv = info[3].tv = (*itr)->getMaxTV();
-
+//		int* cl = (*itr)->GetColor();
+//		info[0].color = D3DCOLOR_ARGB((*cl), (*(cl++)), (*(cl++)), (*(cl++)));
+		/*
+		if ((*itr)->GetTexture() != nullptr) {
+			info[0].tu = info[3].tu = (*itr)->getMinTU();
+			info[0].tv = info[1].tv = (*itr)->getMinTV();
+			info[1].tu = info[2].tu = (*itr)->getMaxTU();
+			info[2].tv = info[3].tv = (*itr)->getMaxTV();
+			m_lpd3ddevice->SetTexture(0,(*itr)->GetTexture());
+		}
+		*/
 		m_lpd3ddevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2,info ,sizeof(VertexInfo));
 	}
 }

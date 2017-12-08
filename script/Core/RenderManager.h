@@ -10,8 +10,9 @@ class SpriteBase;
 
 struct VertexInfo
 {
-	float x, y, z;
-	float tu, tv;
+	float		x, y, z;						// 座標
+//	DWORD		color;							// カラー値
+//	float		tu, tv;							// テクスチャ値
 };
 
 class RenderManager:public SingletonTemplate<RenderManager>

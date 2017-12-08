@@ -8,6 +8,7 @@ class SceneManager;
 class RenderManager;
 class EventManager;
 class AudioManager;
+class ScheduleManager;
 
 class CGame
 {
@@ -20,12 +21,13 @@ public:
 	void SetEndFlag();
 	bool IsEnd();
 private:
-	bool			m_endFlag;
+	bool				m_endFlag;
 
-	SceneManager*	m_sceneMng;
-	RenderManager*	m_renderMng;
-	EventManager*	m_eventMng;
-	AudioManager*	m_audioMng;
+	SceneManager*		m_sceneMng;
+	RenderManager*		m_renderMng;
+	EventManager*		m_eventMng;
+	AudioManager*		m_audioMng;
+	ScheduleManager*	m_scheduleMng;
 };
 
 #endif

@@ -1,7 +1,10 @@
 #include "SpriteBase.h"
 #include "RenderManager.h"
 
+const int SpriteBase::VERTEX_NUM = 4;
+
 SpriteBase::SpriteBase() {
+	m_tex = nullptr;
 }
 SpriteBase::SpriteBase(std::string _name) {
 	auto device = RenderManager::GetInstance()->GetDevice();
@@ -38,11 +41,16 @@ SpriteBase*	SpriteBase::Create(std::string _name) {
 }
 
 bool SpriteBase::Init() {
-	m_rect = Rect(0, 0, 100, 100);
+	m_rect.setRect(0, 0, 100, 100);
 	m_tu = m_tv = 0.0f;
 	m_tuWidth = m_tvHeight = 1.0f;
 	m_tex = NULL;
 	m_drawFlag = true;
+
+	m_color[0] = 255.0f;
+	m_color[1] = 255.0f;
+	m_color[2] = 255.0f;
+	m_color[3] = 255.0f;
 
 	return true;
 }
@@ -70,6 +78,9 @@ float SpriteBase::getMaxTU() {
 }
 float SpriteBase::getMaxTV() {
 	return m_tv + m_tvHeight;
+}
+LPDIRECT3DTEXTURE9 SpriteBase::GetTexture()const {
+	return m_tex;
 }
 
 void SpriteBase::Draw() {
