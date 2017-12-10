@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "../PrototypeScene/PrototypeScene.h"
+#include "ScheduleManager.h"
 
 SceneManager::SceneManager()
 {
@@ -63,6 +64,9 @@ Size SceneManager::GetDisplaySize()const {
 
 void SceneManager::NextScene() {
 	if (m_nextscene != nullptr) {
+		// シーン中にセットしたスケジューラを解放
+		ScheduleManager::GetInstance()->ReleaseAll();
+
 		delete m_currentscene;
 		m_currentscene = m_nextscene;
 		m_nextscene = nullptr;

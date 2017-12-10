@@ -56,7 +56,6 @@ void Object::Exit() {
 
 	Release();
 }
-
 Object* Object::GetParent()const {
 	if (m_parent == nullptr)
 		return nullptr;

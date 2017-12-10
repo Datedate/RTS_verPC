@@ -10,6 +10,7 @@ class RenderManager;
 class EventManager;
 class AudioManager;
 class ScheduleManager;
+class DebugSystem;
 
 class CGame
 {
@@ -30,6 +31,7 @@ private:
 	EventManager*		m_eventMng;
 	AudioManager*		m_audioMng;
 	ScheduleManager*	m_scheduleMng;
+	DebugSystem*		m_debugSysMng;
 };
 
 #endif

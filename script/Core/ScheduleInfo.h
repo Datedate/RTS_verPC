@@ -2,6 +2,7 @@
 #define _SCHEDULE_INFO_H_
 
 #include <functional>
+#include <chrono>
 
 class ScheduleInfo
 {
@@ -33,6 +34,12 @@ public:
 	void SetOrder(int _order) {
 		m_order = _order;
 	}
+	void SetOnce() {
+		m_isOnce = true;
+	}
+
+	void Exec();
+	void Destroy();
 private:
 	void Set(const std::function<void()>& _callback, unsigned int _num, float _delta, float _delay, int _order);
 
@@ -40,8 +47,11 @@ private:
 	unsigned int			m_numExec;
 	float					m_deltatimeExec;
 	float					m_delaytime;
+	std::chrono::steady_clock::time_point	  m_deltatimeStart;
+	std::chrono::steady_clock::time_point	  m_delaytimeStart;
 	int						m_order;
 	bool					m_pause;
+	bool					m_isOnce;
 };
 
 #endif

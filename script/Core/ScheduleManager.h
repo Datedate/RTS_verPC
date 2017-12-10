@@ -20,15 +20,18 @@ public:
 	bool Init();
 	void Exit();
 	void AllUpdate();
-	void SetUpdate(Object* _obj);
-	void ScheduleUpdate(ScheduleInfo* _scheduleInfo);
-	void ScheduleUpdateOnce(ScheduleInfo* _scheduleInfo);
+	void SetUpdate(Object* );
+	void ScheduleUpdate(Object*,ScheduleInfo* _scheduleInfo);
+	void ScheduleUpdateOnce(Object*,ScheduleInfo* _scheduleInfo);
 	void ReleaseSchedule(std::function<void()> _callback);
 	void ReleaseScheduleOnce(std::function<void()> _callback);
 	unsigned int PauseSchedule(std::function<void()> _callback);
 	unsigned int PauseScheduleOnce(std::function<void()> _callback);
 	void ReStartSchedule(unsigned int _id);
+
+	void ReleaseAll();
 private:
+	std::vector<ScheduleInfo*>	m_updaterContainer;
 	std::vector<ScheduleInfo*>	m_scheduleContainer;
 	std::vector<ScheduleInfo*>	m_scheduleOnceContainer;
 };

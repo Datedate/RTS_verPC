@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+class ScheduleManager;
+
 class Object
 {
 public:
@@ -12,7 +14,7 @@ public:
 	~Object();
 	virtual bool Init();
 	static Object* Create();
-	virtual void Update();
+	void Update();
 	virtual void AddChild(Object*);
 	virtual void AddChild(Object*, int _zorder);
 	virtual void RemoveAllChildren();

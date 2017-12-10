@@ -4,6 +4,7 @@
 #include "EventManager.h"
 #include "ScheduleManager.h"
 #include "FPSController.h"
+#include "DebugSystem.h"
 
 CGame::CGame()
 {
@@ -19,6 +20,7 @@ bool CGame::Init(HWND _hwnd, HINSTANCE _hInstance, bool _fullscreen, int _screen
 	m_renderMng = RenderManager::GetInstance();
 	m_eventMng = EventManager::GetInstance();
 	m_scheduleMng = ScheduleManager::GetInstance();
+	m_debugSysMng = DebugSystem::GetInstance();
 
 	// 入力デバイス初期化
 	if (!m_eventMng->Init(_hInstance,_hwnd))
@@ -29,6 +31,7 @@ bool CGame::Init(HWND _hwnd, HINSTANCE _hInstance, bool _fullscreen, int _screen
 	// シーンマネージャーの初期化
 	m_sceneMng->Init(_screenX,_screenY);
 	m_scheduleMng->Init();
+	m_debugSysMng->Init();
 
 	return true;
 }
