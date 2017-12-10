@@ -3,6 +3,7 @@
 #include "RenderManager.h"
 #include "EventManager.h"
 #include "ScheduleManager.h"
+#include "FPSController.h"
 
 CGame::CGame()
 {
@@ -33,17 +34,20 @@ bool CGame::Init(HWND _hwnd, HINSTANCE _hInstance, bool _fullscreen, int _screen
 }
 
 void CGame::Exec() {
-	m_eventMng->Excute();
-	m_sceneMng->Update();
-	m_renderMng->Render();
-	m_scheduleMng->AllUpdate();
+	// FPS§Œä
+	if (m_fpsCtrl.FpsControlCheck()) {
+		m_eventMng->Excute();
+		m_sceneMng->Update();
+		m_scheduleMng->AllUpdate();
+		m_renderMng->Render();
+	}
 }
 
 void CGame::Exit() {
 	m_eventMng->Exit();
 	m_renderMng->Exit();
-	m_sceneMng->Exit();
 	m_scheduleMng->Exit();
+	m_sceneMng->Exit();
 }
 
 void CGame::SetEndFlag() {
