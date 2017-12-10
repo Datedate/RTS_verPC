@@ -10,6 +10,7 @@ void ScheduleManager::Exit() {
 
 void ScheduleManager::AllUpdate() {
 
+
 }
 void ScheduleManager::SetUpdate(Object* _obj) {
 

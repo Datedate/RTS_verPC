@@ -2,6 +2,7 @@
 #define _CGAME_H_
 
 #include "ConfigSystem.h"
+#include "FPSController.h"
 #include <Windows.h>
 
 class SceneManager;
@@ -23,6 +24,7 @@ public:
 private:
 	bool				m_endFlag;
 
+	FPSContoller		m_fpsCtrl;
 	SceneManager*		m_sceneMng;
 	RenderManager*		m_renderMng;
 	EventManager*		m_eventMng;
