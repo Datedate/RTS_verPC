@@ -58,10 +58,6 @@ void SceneManager::PopScene() {
 	*/
 }
 
-Size SceneManager::GetDisplaySize()const {
-	return m_displaySize;
-}
-
 void SceneManager::NextScene() {
 	if (m_nextscene != nullptr) {
 		// シーン中にセットしたスケジューラを解放

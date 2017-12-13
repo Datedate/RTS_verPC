@@ -1,9 +1,9 @@
 #include "SceneBase.h"
-#include "SceneManager.h"
+#include "RenderManager.h"
 #include "LayerBase.h"
 
 bool SceneBase::Init() {
-	m_size = SceneManager::GetInstance()->GetDisplaySize();
+	m_size = RenderManager::GetInstance()->GetDisplaySize();
 	return true;
 }
 /*

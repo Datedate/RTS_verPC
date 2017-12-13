@@ -209,7 +209,7 @@ void CWindowMain::LocalTimeProc() {
 
 void CWindowMain::GameMain() {
 	while (1) {
-		/*
+		
 		DWORD sts = WaitForSingleObject(m_eventHandle, 1000);	// イベントフラグがセットされるのを待つ（1000msでタイムアウト）
 		if (sts == WAIT_FAILED) {
 			break;
@@ -220,7 +220,7 @@ void CWindowMain::GameMain() {
 			}
 			continue;
 		}
-		*/
+		
 		m_game.Exec();
 	}
 
