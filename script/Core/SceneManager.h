@@ -17,7 +17,6 @@ public:
 	void ChengeScene(SceneBase* _scene);
 	void PushScene(SceneBase* _scene);
 	void PopScene();
-	Size GetDisplaySize()const;
 private:
 	void NextScene();
 	SceneManager();
@@ -26,7 +25,6 @@ private:
 	//std::vector<SceneBase*> m_scenes;
 	SceneBase*				m_currentscene;
 	SceneBase*				m_nextscene;
-	Size					m_displaySize;
 };
 
 #endif
