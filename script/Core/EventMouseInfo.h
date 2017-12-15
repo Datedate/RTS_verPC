@@ -21,6 +21,9 @@ public:
 	~EventMouseInfo() {};
 	MouseEventType GetMouseType();
 	void SetPosition(float _x,float _y);
+	Vector2 GetPosition()const {
+		return m_pos;
+	}
 private:
 	MouseEventType	m_mouseTyoe;
 	Vector2			m_pos;

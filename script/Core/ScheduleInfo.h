@@ -44,14 +44,15 @@ private:
 	void Set(const std::function<void()>& _callback, unsigned int _num, float _delta, float _delay, int _order);
 
 	std::function<void()>	m_callback;
-	unsigned int			m_numExec;
-	float					m_deltatimeExec;
+	unsigned int			m_numExec ;
+	float					m_deltatime;
 	float					m_delaytime;
 	std::chrono::steady_clock::time_point	  m_deltatimeStart;
 	std::chrono::steady_clock::time_point	  m_delaytimeStart;
 	int						m_order;
 	bool					m_pause;
 	bool					m_isOnce;
+	bool					m_isfirstflg;
 };
 
 #endif

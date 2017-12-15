@@ -1,6 +1,8 @@
 #include "ScheduleManager.h"
 #include "ScheduleInfo.h"
-#include "Object.h"
+#include "SceneBase.h"
+#include "LayerBase.h"
+#include "SpriteBase.h"
 
 bool ScheduleManager::Init() {
 	return true;
@@ -31,12 +33,13 @@ void ScheduleManager::AllUpdate() {
 		}
 	}
 }
-void ScheduleManager::SetUpdate(Object* _target) {
-	auto info = new ScheduleInfo(
-		std::bind(&Object::Update, std::ref(_target)));
+
+
+void ScheduleManager::SetUpdate(const std::function<void()>& _update) {
+	auto info = new ScheduleInfo(_update);
 	m_updaterContainer.push_back(info);
 }
-void ScheduleManager::ScheduleUpdate(Object* _target,ScheduleInfo* _scheduleInfo) {
+void ScheduleManager::ScheduleUpdate(ScheduleInfo* _scheduleInfo) {
 	m_scheduleContainer.push_back(_scheduleInfo);
 }
 void ScheduleManager::ScheduleUpdateOnce(Object* _target,ScheduleInfo* _scheduleInfo) {

@@ -3,6 +3,7 @@
 #include "LayerBase.h"
 
 bool SceneBase::Init() {
+	m_objType = ObjectType::SCENE;
 	m_size = RenderManager::GetInstance()->GetDisplaySize();
 	return true;
 }

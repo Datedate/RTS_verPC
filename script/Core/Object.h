@@ -10,6 +10,14 @@ class ScheduleManager;
 class Object
 {
 public:
+	enum class ObjectType {
+		OBJECT,
+		SCENE,
+		LAYER,
+		SPRITE
+	};
+
+public:
 	Object();
 	~Object();
 	virtual bool Init();
@@ -30,6 +38,7 @@ public:
 	bool IsVisible()const;
 	std::string GetName()const;
 	int GetOrder()const;
+	ObjectType GetType()const;
 protected:
 	void SetParent(Object*);
 protected:
@@ -38,6 +47,7 @@ protected:
 	bool					m_visible;
 	std::string				m_name;
 	int						m_zorder;
+	ObjectType				m_objType;
 };
 
 #endif

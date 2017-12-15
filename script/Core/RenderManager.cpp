@@ -1,6 +1,7 @@
 #include "RenderManager.h"
 #include "SpriteBase.h"
 #include "ShaderManager.h"
+#include "DebugSystem.h"
 
 RenderManager::RenderManager() {
 	m_lpd3d = NULL;
@@ -160,6 +161,7 @@ void RenderManager::VertexBufferToVRAM() {
 
 void RenderManager::CleanUp() {
 	//m_drawList.clear();
+	DebugSystem::GetInstance()->Clear();
 }
 
 void RenderManager::InStreamVertex() {
@@ -199,28 +201,12 @@ void RenderManager::InStreamVertex() {
 		shaderData->effect->SetFloat("pivot_x"	  , sp->getPivotX());
 		shaderData->effect->SetFloat("pivot_y"	  , sp->getPivotY());
 		shaderData->effect->CommitChanges();
-		/*
-		// 頂点情報セット
-		VertexInfo info[4];
 
-		info[0].x = info[1].x = (*itr)->GetRectangle().getMinX();
-		info[0].y = info[3].y = (*itr)->GetRectangle().getMinY();
-		info[2].x = info[3].x = (*itr)->GetRectangle().getMaxX();
-		info[1].y = info[2].y = (*itr)->GetRectangle().getMaxY();
-		info[0].z = info[1].z = info[2].z = info[3].z = 0.0f;
-
-		if ((*itr)->GetTexture() != nullptr) {
-			info[0].tu = 0.0f; info[0].tv = 0.0f;
-			info[1].tu = 0.0f; info[1].tv = 1.0f;
-			info[2].tu = 1.0f; info[2].tv = 1.0f;
-			info[3].tu = 1.0f; info[3].tv = 0.0f;
-		}
-
-		//m_vertex = info;
-		*/
 		m_lpd3ddevice->DrawPrimitive(D3DPT_TRIANGLEFAN, 0 ,2);
 
 		shaderData->effect->EndPass();
 		shaderData->effect->End();
 	}
+
+	DebugSystem::GetInstance()->DebugDrawText();
 }

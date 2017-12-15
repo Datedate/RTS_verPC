@@ -1,6 +1,7 @@
 #include "LayerBase.h"
 
 bool LayerBase::Init() {
+	m_objType = ObjectType::LAYER;
 	return true;
 }
 

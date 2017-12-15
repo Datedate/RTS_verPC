@@ -37,6 +37,7 @@ public:
 	bool CreateTex(std::string _texName);
 	void UVCut(float _left, float _top, float _width, float _height);
 	void SetAlpha(float _alpha);
+	void Move(float _x, float _y);
 
 	void Trans(float _transX,float _transY);			// •½sˆÚ“®
 	void Rotation(float _angleZ);						// ‰ñ“]

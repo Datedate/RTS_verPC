@@ -22,6 +22,7 @@ public:
 
 	/** override function */
 	bool Init()override;
+	void Update() {};
 	//virtual void AddChild(Object* _child);
 	virtual void RemoveAllChildren() override;
 	virtual void RemoveChild(std::string _childname)override;

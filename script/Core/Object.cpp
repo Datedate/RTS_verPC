@@ -9,6 +9,8 @@ Object::~Object() {
 }
 
 bool Object::Init() {
+	m_children.clear();
+	m_objType = ObjectType::OBJECT;
 	return true;
 }
 
@@ -18,12 +20,14 @@ Object* Object::Create()
 }
 
 void Object::Update() {
+	/* TODO : ScheduleManager‚Æ‚Ì‘g‚Ý‡‚í‚¹‚é
 	if (m_children.size() == 0) return;
 	
 	auto itr = m_children.begin();
 	for (;itr != m_children.end();itr++) {
 		(*itr)->Update();
 	}
+	*/
 }
 
 void Object::AddChild(Object* _child) {
@@ -72,4 +76,8 @@ std::string Object::GetName()const {
 
 int Object::GetOrder()const {
 	return m_zorder;
+}
+
+Object::ObjectType Object::GetType()const {
+	return m_objType;
 }

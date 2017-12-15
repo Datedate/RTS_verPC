@@ -13,9 +13,11 @@ public:
 
 	bool Init();
 	CREATE_FUNC(PrototypeMainLayer);
+	void Update();
 private:
 	SpriteBase* m_sprite;
 	bool		m_fadeFlag;
+	float		scaleX, scaleY;
 };
 
 #endif

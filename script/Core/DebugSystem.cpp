@@ -25,10 +25,21 @@ bool DebugSystem::Init() {
 	return false;
 }
 
-void DebugSystem::DebugDrawText(const char* _buf, int _x, int _y) const {
-	RECT rect = { _x , _y , 0 , 0 };
-	// 文字列のサイズを計算
-	m_font->DrawText(NULL, _buf, -1, &rect, DT_CALCRECT, NULL);
-	// 文字列描画（赤色）
-	m_font->DrawText(NULL, _buf, -1, &rect, DT_LEFT | DT_BOTTOM, 0xffff0000);
+void DebugSystem::Push(const std::string _buf, int _x, int _y) {
+	m_bufContainer.push_back(DEBUG_TEXT(_buf, _x, _y));
+}
+void DebugSystem::DebugDrawText() const {
+	RECT rect = {0,0,0,0};
+	for (auto itr = m_bufContainer.begin();itr != m_bufContainer.end();++itr) {
+		rect.left = itr->x;
+		rect.bottom = itr->y;
+		// 文字列のサイズを計算
+		m_font->DrawText(NULL, itr->buf.c_str(), -1, &rect, DT_CALCRECT, NULL);
+		// 文字列描画（赤色）
+		m_font->DrawText(NULL, itr->buf.c_str(), -1, &rect, DT_LEFT | DT_BOTTOM, 0xffff0000);
+	}
+	
+}
+void DebugSystem::Clear() {
+	m_bufContainer.clear();
 }

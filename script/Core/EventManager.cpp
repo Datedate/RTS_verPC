@@ -23,6 +23,7 @@ void EventManager::AddEvent(EventListenerBase* _value , Object* _target) {
 }
 
 void EventManager::Excute() {
+	m_inputMng->Update();
 	if (m_eventContainer.empty()) return;
 	
 	for (auto itr = m_eventContainer.begin(); itr != m_eventContainer.end(); itr++) {

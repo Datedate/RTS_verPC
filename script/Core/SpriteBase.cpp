@@ -75,6 +75,7 @@ SpriteBase*	SpriteBase::Create(std::string _name) {
 }
 
 bool SpriteBase::Init() {
+	m_objType = ObjectType::SPRITE;
 	pRenderMng = RenderManager::GetInstance();
 	pRenderMng->PushDraw(this);
 	return true;
@@ -124,6 +125,10 @@ void SpriteBase::UVCut(float _left, float _top, float _width, float _height) {
 }
 void SpriteBase::SetAlpha(float _alpha) {
 	m_alpha = _alpha;
+}
+
+void SpriteBase::Move(float _x, float _y) {
+	Trans(_x - m_pos.x, _y - m_pos.y);
 }
 
 void SpriteBase::Trans(float _transX, float _transY) {
