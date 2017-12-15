@@ -40,8 +40,8 @@ void CGame::Exec() {
 	// FPS§Œä
 	if (m_fpsCtrl.FpsControlCheck()) {
 		m_eventMng->Excute();
-		m_sceneMng->Update();
 		m_scheduleMng->AllUpdate();
+		m_sceneMng->Update();
 		m_renderMng->Render();
 	}
 }

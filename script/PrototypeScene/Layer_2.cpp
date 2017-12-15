@@ -1,4 +1,4 @@
-#include "PrototypeMainLayer.h"
+#include "Layer_2.h"
 #include "../Core/SpriteBase.h"
 #include "../Core/RenderManager.h"
 #include "../Core/ShaderManager.h"
@@ -9,7 +9,7 @@
 #include "../../resource3.h"
 #include "../Core/ScheduleInfo.h"
 
-bool PrototypeMainLayer::Init() {
+bool Layer_2::Init() {
 	if (!LayerBase::Init()) {
 		return false;
 	}
@@ -22,8 +22,8 @@ bool PrototypeMainLayer::Init() {
 	m_sprite->SetName("spriteTest");
 	//m_sprite->UVCut(0.2, 0.2, 0.7, 0.7);
 	//m_sprite->SetAlpha(1);
-	m_sprite->Trans(500,200);
-	sp->Trans(500, 400);
+	m_sprite->Trans(200, 200);
+	sp->Trans(200 ,400);
 	//m_sprite->Scale(1, 1);
 	//m_sprite->Rotation(90);
 	m_sprite->SetEffectID(FXID_EFFECT);
@@ -33,22 +33,22 @@ bool PrototypeMainLayer::Init() {
 	this->AddChild(sp);
 
 	EventMouseListener* listener2 = EventMouseListener::Create();
-	listener2->m_onMouseDown = [](EventMouseInfo* _eventMouse) {
+	listener2->m_onMouseMove = [](EventMouseInfo* _eventMouse) {
 		SpriteBase* target = static_cast<SpriteBase*>(_eventMouse->GetTarget());
-		target->Move(_eventMouse->GetPosition().x,_eventMouse->GetPosition().y);
+		target->Move(_eventMouse->GetPosition().x, _eventMouse->GetPosition().y);
 	};
 
 	// Update“o˜^
-	//SET_UPDATE(PrototypeMainLayer);
-	
-	SET_SCHEDULE_M3(PrototypeMainLayer::Update,4,2,5);
+	//SET_UPDATE(Layer_2);
 
-	EventManager::GetInstance()->AddEvent(listener2,m_sprite);
+	SET_SCHEDULE_M3(Layer_2::Update, 3, 1, 3);
+
+	EventManager::GetInstance()->AddEvent(listener2, m_sprite);
 	return true;
 }
 
-void PrototypeMainLayer::Update() {
+void Layer_2::Update() {
 	m_sprite->Scale(scaleX, scaleY);
-	scaleX+= 0.5;
-	scaleY+= 0.5;
+	scaleX += 0.05;
+	scaleY += 0.05;
 }

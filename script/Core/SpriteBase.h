@@ -47,11 +47,6 @@ public:
 	DWORD GetEffectID()const {
 		return m_effectID;
 	}
-	/*
-	Rect GetRectangle()const {
-		return m_rect;
-	}
-	*/
 	D3DXMATRIX GetMatrix() const{
 		return m_world;
 	}
@@ -64,17 +59,9 @@ public:
 	float getPivotX()const;
 	float getPivotY()const;
 	UV getUV()const;
-	/*
-	float getMinTV()const;
-	float getWidthUV()const;
-	float getHeightUV()const;
-	*/
 	LPDIRECT3DTEXTURE9 GetTexture()const;
 
-
 private:
-	void Draw();
-
 	Poly					m_poly;
 	UV						m_uv;
 	float					m_pivot_x, m_pivot_y;

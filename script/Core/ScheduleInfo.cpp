@@ -27,7 +27,13 @@ void ScheduleInfo::Set(const std::function<void()>& _callback, unsigned int _num
 	m_pause = false;
 	m_isOnce = false;
 	m_isfirstflg = true;
-	//m_deltatimeStart = m_delaytimeStart = std::chrono::steady_clock::now();
+}
+
+void ScheduleInfo::FirstCallback() {
+	if (m_delaytime == 0)
+		m_callback();
+	m_deltatimeStart = m_delaytimeStart = std::chrono::steady_clock::now();
+	m_isfirstflg = false;
 }
 
 void ScheduleInfo::Exec() {
@@ -36,14 +42,10 @@ void ScheduleInfo::Exec() {
 
 	// 初回だけ強制的に呼び出す（m_delayTimeが０の時）
 	if (m_isfirstflg) {
-		if(m_delaytime == 0)
-			m_callback();
-		m_deltatimeStart = m_delaytimeStart = std::chrono::steady_clock::now();
-		m_isfirstflg = false;
+		FirstCallback();
 	}
 
 	if (m_pause) return;
-
 	if (m_numExec > -5 && m_numExec < 0 ) return;
 
 	auto nowTime = std::chrono::steady_clock::now();

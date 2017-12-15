@@ -1,5 +1,6 @@
 #include "RenderManager.h"
 #include "SpriteBase.h"
+#include "LayerBase.h"
 #include "ShaderManager.h"
 #include "DebugSystem.h"
 
@@ -120,10 +121,15 @@ void RenderManager::Exit() {
 }
 
 void RenderManager::Render() {
+	SortLayerInSprite();
+
 	m_lpd3ddevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	m_lpd3ddevice->BeginScene();
 
+	// スプライト描画
 	InStreamVertex();
+	// デバッグ表示
+	DebugSystem::GetInstance()->DebugDrawText();
 
 	m_lpd3ddevice->EndScene();
 	m_lpd3ddevice->Present(NULL, NULL, NULL, NULL);
@@ -160,8 +166,15 @@ void RenderManager::VertexBufferToVRAM() {
 }
 
 void RenderManager::CleanUp() {
-	//m_drawList.clear();
+	m_drawList.clear();
 	DebugSystem::GetInstance()->Clear();
+}
+
+void RenderManager::SortLayerInSprite() {
+	for (auto layer = m_layerList.begin();layer != m_layerList.end();++layer) {
+		(*layer)->SortChildren();
+		(*layer)->PushSpriteToRenderer();
+	}
 }
 
 void RenderManager::InStreamVertex() {
@@ -173,7 +186,7 @@ void RenderManager::InStreamVertex() {
 	m_lpd3ddevice->SetStreamSource(0, m_lpvxBuff, 0, sizeof(float) * 5);
 	m_lpd3ddevice->SetVertexDeclaration(m_lpdecl);
 
-	for (;sprite != m_drawList.end();++sprite) {
+	for (;sprite != m_drawList.end() ;sprite++) {
 		SpriteBase* sp = (*sprite);
 		if (!sp->IsDrawFlag()) continue;
 		sp->MakeWorldMatrix();
@@ -207,6 +220,4 @@ void RenderManager::InStreamVertex() {
 		shaderData->effect->EndPass();
 		shaderData->effect->End();
 	}
-
-	DebugSystem::GetInstance()->DebugDrawText();
 }

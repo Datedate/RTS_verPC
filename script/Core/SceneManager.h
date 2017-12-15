@@ -15,14 +15,11 @@ public:
 	void Update();
 	void Exit();
 	void ChengeScene(SceneBase* _scene);
-	void PushScene(SceneBase* _scene);
-	void PopScene();
 private:
 	void NextScene();
 	SceneManager();
 	~SceneManager();
 private:
-	//std::vector<SceneBase*> m_scenes;
 	SceneBase*				m_currentscene;
 	SceneBase*				m_nextscene;
 };

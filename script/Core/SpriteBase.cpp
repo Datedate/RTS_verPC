@@ -19,10 +19,10 @@ SpriteBase::SpriteBase() {
 	m_pivot_y = 0.5f;
 
 	// ƒJƒ‰[’l
-	m_color[0] = 255.0f;
-	m_color[1] = 255.0f;
-	m_color[2] = 255.0f;
-	m_color[3] = 255.0f;
+	m_color[0] = 255;
+	m_color[1] = 255;
+	m_color[2] = 255;
+	m_color[3] = 255;
 
 	// Œ»Ý‚ÌŽp¨
 	m_pos.x		  = m_poly.x;
@@ -77,7 +77,7 @@ SpriteBase*	SpriteBase::Create(std::string _name) {
 bool SpriteBase::Init() {
 	m_objType = ObjectType::SPRITE;
 	pRenderMng = RenderManager::GetInstance();
-	pRenderMng->PushDraw(this);
+	//pRenderMng->PushDraw(this);
 	return true;
 }
 
@@ -184,21 +184,6 @@ float SpriteBase::getPivotY() const {
 UV SpriteBase::getUV() const {
 	return m_uv;
 }
-/*
-float SpriteBase::getMinTV() const  {
-	return m_tv;
-}
-float SpriteBase::getWidthUV() const  {
-	return m_tuWidth;
-}
-float SpriteBase::getHeightUV() const  {
-	return m_tvHeight;
-}
-*/
 LPDIRECT3DTEXTURE9 SpriteBase::GetTexture()const {
 	return m_tex;
-}
-void SpriteBase::Draw() {
-	auto Render = RenderManager::GetInstance();
-	Render->PushDraw(this);
 }

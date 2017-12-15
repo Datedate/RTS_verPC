@@ -15,10 +15,7 @@ public:
 	ScheduleInfo(const std::function<void()>& _callback, unsigned int _num, float _delta, float _delay, int _order);
 	~ScheduleInfo() {};
 
-//	void Set(const std::function<void()>& _callback);
-//	void Set(const std::function<void()>& _callback, unsigned int _num);
-//	void Set(const std::function<void()>& _callback, unsigned int _num, float _delta);
-//	void Set(const std::function<void()>& _callback, unsigned int _num, float _delta, float _delay);
+	void FirstCallback();
 	void SetFunction(const std::function<void()>& _callback){
 		m_callback = _callback;
 	}
