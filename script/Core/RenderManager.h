@@ -8,6 +8,7 @@
 #include "Rectangle.h"
 
 class SpriteBase;
+class LayerBase;
 
 struct VertexInfo
 {
@@ -15,7 +16,7 @@ struct VertexInfo
 	float		tu, tv;							// テクスチャ値
 };
 
-class RenderManager:public SingletonTemplate<RenderManager>
+class RenderManager :public SingletonTemplate<RenderManager>
 {
 public:
 	friend SingletonTemplate<RenderManager>;
@@ -28,10 +29,13 @@ public:
 		return m_lpd3ddevice;
 	}
 
-	void PushDraw(SpriteBase* _sprite) {
+	void PushSprite(SpriteBase* _sprite) {
 		m_drawList.push_back(_sprite);
 	}
-	
+	void PushLayer(LayerBase* _layer) {
+		m_layerList.push_back(_layer);
+	}
+
 	Size GetDisplaySize()const {
 		return m_displaySize;
 	}
@@ -42,7 +46,10 @@ private:
 	void VertexFormatSetting();
 	void VertexBufferToVRAM();
 	void CleanUp();
+
+	void SortLayerInSprite();
 	void InStreamVertex();
+
 
 private:
 	LPDIRECT3D9						m_lpd3d;			// DIRECT3D8オブジェクト
@@ -55,7 +62,8 @@ private:
 	int								m_width;			// バックバッファＸサイズ
 	int								m_height;			// バックバッファＹサイズ
 	Size							m_displaySize;		// バッファサイズ
-	std::vector<SpriteBase*>		m_drawList;
+	std::vector<SpriteBase*>		m_drawList;			// 描画するスプライトのコンテナ
+	std::vector<LayerBase*>			m_layerList;		// レイヤーコンテナ（スプライトを渡す）
 	D3DXMATRIX						m_projection2D;		// 2D用射影変換行列 
 	LPDIRECT3DVERTEXBUFFER9			m_lpvxBuff;		// 頂点バッファ
 };

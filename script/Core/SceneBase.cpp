@@ -1,19 +1,20 @@
 #include "SceneBase.h"
 #include "RenderManager.h"
 #include "LayerBase.h"
-
 bool SceneBase::Init() {
+	m_objType = ObjectType::SCENE;
 	m_size = RenderManager::GetInstance()->GetDisplaySize();
+
 	return true;
 }
-/*
-void SceneBase::AddChild(Object* _child) {
-	LayerBase* childLayer = static_cast<LayerBase*>(_child);
-	childLayer->SetSize(m_size);
 
-	Object::AddChild(childLayer);
+void SceneBase::AddChild(LayerBase* _child, unsigned int _order) {
+	Object::AddChild(_child,_order);
+
+	_child->SetSize(m_size);
+
 }
-*/
+
 void SceneBase::RemoveAllChildren() {
 	if (m_children.empty()) return;
 

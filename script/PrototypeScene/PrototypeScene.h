@@ -4,7 +4,7 @@
 #include "../Core/SceneBase.h"
 
 class PrototypeMainLayer;
-
+class Layer_2;
 class PrototypeScene :public SceneBase
 {
 public:
@@ -14,7 +14,8 @@ public:
 	void Update();
 	CREATE_FUNC(PrototypeScene);
 private:
-	PrototypeMainLayer* m_protoMainLayer;;
+	PrototypeMainLayer* m_protoMainLayer;
+	Layer_2*				m_layer2;
 };
 
 #endif

@@ -7,7 +7,16 @@ EventListenerBase::EventListenerBase()
 EventListenerBase::~EventListenerBase()
 {}
 
+bool EventListenerBase::Init() {
+	m_eventId = EVENT_ID::NO_ID;
+	m_eventName = "";
+	m_onEvent = nullptr;
+	m_isRegistered = false;
+	m_paused = true;
+	m_isEnabled = true;
+	return true;
 
+}
 bool EventListenerBase::Init(EVENT_ID _id, const std::string& _eventName, const std::function<void(EventInfo*)>& _callback) {
 	m_eventId = _id;
 	m_eventName = _eventName;
@@ -16,6 +25,11 @@ bool EventListenerBase::Init(EVENT_ID _id, const std::string& _eventName, const 
 	m_paused = true;
 	m_isEnabled = true;
 	return true;
+}
+void EventListenerBase::SetStatus(EVENT_ID _id, const std::string& _eventName, const std::function<void(EventInfo*)>& _callback) {
+	m_eventId = _id;
+	m_eventName = _eventName;
+	m_onEvent = _callback;
 }
 void EventListenerBase::SetTarget(Object* _target) {
 	m_target = _target;

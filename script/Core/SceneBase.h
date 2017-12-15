@@ -6,6 +6,7 @@
 
 class CameraBase;
 class LightBase;
+class LayerBase;
 
 class SceneBase :public Object
 {
@@ -17,12 +18,9 @@ public:
 	CameraBase* GetCamera() const { return m_camera; }
 	LightBase* GetLight() const { return m_light; }
 
-	//virtual void Render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection = nullptr);
-	//virtual void Render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* eyeProjections, unsigned int multiViewCount);
-
 	/** override function */
 	bool Init()override;
-	//virtual void AddChild(Object* _child);
+	virtual void AddChild(LayerBase* _child,unsigned int _order);
 	virtual void RemoveAllChildren() override;
 	virtual void RemoveChild(std::string _childname)override;
 protected:

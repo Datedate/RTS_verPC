@@ -12,6 +12,7 @@ class EventListenerBase
 {
 public:
 	enum class EVENT_ID {
+		NO_ID,
 		MOUSE_ID,
 		KEYBOARD_ID,
 		COLLISION_ID,
@@ -20,9 +21,12 @@ public:
 public:
 	EventListenerBase();
 	~EventListenerBase();
+
 	virtual EventListenerBase*	Clone() = 0;
 
-	bool Init(EVENT_ID _id, const std::string& _evnetName, const std::function<void(EventInfo*)>& callback);
+	bool Init();
+	bool Init(EVENT_ID _id, const std::string& _eventName, const std::function<void(EventInfo*)>& _callback);
+	void SetStatus(EVENT_ID _id, const std::string& _evnetName, const std::function<void(EventInfo*)>& _callback);
 
 	void SetEnabled(bool enabled) { m_isEnabled = enabled; }
 	bool IsEnabled() const { return m_isEnabled; }

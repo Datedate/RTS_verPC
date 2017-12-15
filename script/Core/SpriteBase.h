@@ -37,6 +37,7 @@ public:
 	bool CreateTex(std::string _texName);
 	void UVCut(float _left, float _top, float _width, float _height);
 	void SetAlpha(float _alpha);
+	void Move(float _x, float _y);
 
 	void Trans(float _transX,float _transY);			// ïΩçsà⁄ìÆ
 	void Rotation(float _angleZ);						// âÒì]
@@ -46,11 +47,6 @@ public:
 	DWORD GetEffectID()const {
 		return m_effectID;
 	}
-	/*
-	Rect GetRectangle()const {
-		return m_rect;
-	}
-	*/
 	D3DXMATRIX GetMatrix() const{
 		return m_world;
 	}
@@ -63,17 +59,9 @@ public:
 	float getPivotX()const;
 	float getPivotY()const;
 	UV getUV()const;
-	/*
-	float getMinTV()const;
-	float getWidthUV()const;
-	float getHeightUV()const;
-	*/
 	LPDIRECT3DTEXTURE9 GetTexture()const;
 
-
 private:
-	void Draw();
-
 	Poly					m_poly;
 	UV						m_uv;
 	float					m_pivot_x, m_pivot_y;

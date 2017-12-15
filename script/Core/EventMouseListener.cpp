@@ -3,13 +3,6 @@
 
 const std::string EventMouseListener::EVENT_NAME= "Mouse_Name";
 
-EventMouseListener* EventMouseListener::Create()
-{
-	auto ret = new EventMouseListener();
-	ret->Init();
-	return ret;
-}
-
 EventMouseListener* EventMouseListener::Clone()
 {
 	auto ret = new EventMouseListener();

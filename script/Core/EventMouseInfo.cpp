@@ -10,5 +10,6 @@ EventMouseInfo::MouseEventType EventMouseInfo::GetMouseType() {
 
 void EventMouseInfo::SetPosition(float _x, float _y) {
 	m_pos.x = _x;
-	m_pos.y = _y;
+	// cocos2dx‘g‚Ý‚±‚Ý—\’è‚È‚Ì‚Å‚™‚ð”½“]
+	m_pos.y = 959 - _y;
 }

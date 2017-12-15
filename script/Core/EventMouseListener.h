@@ -12,7 +12,7 @@ public:
 	~EventMouseListener() {};
 
 	static const std::string EVENT_NAME;
-	static EventMouseListener* Create();
+	CREATE_FUNC(EventMouseListener);
 
 	EventMouseListener* Clone();
 
