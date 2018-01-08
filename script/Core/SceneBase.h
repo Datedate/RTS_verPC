@@ -27,6 +27,7 @@ protected:
 	CameraBase*	m_camera;
 	LightBase*	m_light;
 	Size		m_size;
+	bool		m_debugFlag;
 };
 
 #endif

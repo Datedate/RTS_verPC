@@ -4,7 +4,7 @@
 bool SceneBase::Init() {
 	m_objType = ObjectType::SCENE;
 	m_size = RenderManager::GetInstance()->GetDisplaySize();
-
+	m_debugFlag = false;
 	return true;
 }
 
@@ -34,4 +34,11 @@ void SceneBase::RemoveChild(std::string _childname) {
 		}
 	}
 
+}
+
+void SceneBase::OnDebugMode() {
+	m_debugFlag = true;
+}
+void SceneBase::OffDebugMode() {
+	m_debugFlag = false;
 }
