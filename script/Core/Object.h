@@ -14,7 +14,8 @@ public:
 		OBJECT,
 		SCENE,
 		LAYER,
-		SPRITE
+		SPRITE,
+		PARTICLE
 	};
 
 public:

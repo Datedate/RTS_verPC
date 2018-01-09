@@ -23,10 +23,13 @@ public:
 	virtual void AddChild(LayerBase* _child,unsigned int _order);
 	virtual void RemoveAllChildren() override;
 	virtual void RemoveChild(std::string _childname)override;
+	virtual void OnDebugMode();
+	virtual void OffDebugMode();
 protected:
 	CameraBase*	m_camera;
 	LightBase*	m_light;
 	Size		m_size;
+	bool		m_debugFlag;
 };
 
 #endif

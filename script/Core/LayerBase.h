@@ -5,6 +5,7 @@
 #include "Rectangle.h"
 
 class SpriteBase;
+class ParticleSystem;
 
 class LayerBase : public Object
 {
@@ -17,6 +18,7 @@ public:
 	void RemoveAllChildren() override;
 	void RemoveChild(std::string _name) override;
 	void AddChild(SpriteBase* _sprite);
+	void AddChild(ParticleSystem* _particle);
 	void SortChildren();
 	void PushSpriteToRenderer();
 	void SetSize(Size _size);

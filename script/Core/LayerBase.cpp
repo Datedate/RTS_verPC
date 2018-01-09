@@ -1,6 +1,7 @@
 #include "LayerBase.h"
 #include "SpriteBase.h"
 #include "RenderManager.h"
+#include "ParticleSystem.h"
 
 bool LayerBase::Init() {
 	m_objType = ObjectType::LAYER;
@@ -31,6 +32,11 @@ void LayerBase::AddChild(SpriteBase* _sprite) {
 	m_isChildChange = true;
 }
 
+void LayerBase::AddChild(ParticleSystem* _particle) {
+	Object::AddChild(_particle);
+	m_isChildChange = true;
+}
+
 void LayerBase::SortChildren() {
 	if (!m_isChildChange) return;
 	// TODO : 子供（スプライトをオーダー順に並び変える）
@@ -45,6 +51,10 @@ void LayerBase::PushSpriteToRenderer() {
 		if ((*sprite)->GetType() == Object::ObjectType::SPRITE) {
 			SpriteBase* sp = static_cast<SpriteBase*>(*sprite);
 			RenderManager::GetInstance()->PushSprite(sp);
+		}
+		else if((*sprite)->GetType() == Object::ObjectType::PARTICLE){
+			ParticleSystem* p = static_cast<ParticleSystem*>(*sprite);
+			p->PushParticle();
 		}
 	}
 }
