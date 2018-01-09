@@ -131,6 +131,14 @@ void SpriteBase::Move(float _x, float _y) {
 	Trans(_x - m_pos.x, _y - m_pos.y);
 }
 
+bool SpriteBase::InRange(float _x, float _y) {
+	if (_x >= m_pos.x && _x <= m_pos.x + m_poly.wid) {
+		if (_y >= m_pos.y && _y <= m_pos.y + m_poly.hei)
+			return true;
+	}
+	return false;
+}
+
 void SpriteBase::Trans(float _transX, float _transY) {
 	m_transAmount.x = _transX;
 	m_transAmount.y = _transY;

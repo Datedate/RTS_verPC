@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "../PrototypeScene/PrototypeScene.h"
+#include "../ParticleOperation/ParticleOperationScene.h"
 #include "ScheduleManager.h"
 
 SceneManager::SceneManager()
@@ -11,7 +12,7 @@ SceneManager::~SceneManager()
 }
 
 void SceneManager::Init(float _sizeWidth,float _sizeHeight) {		
-	m_currentscene = PrototypeScene::Create();
+	m_currentscene = ParticleOperationScene::Create();
 }
 
 void SceneManager::Update() {
