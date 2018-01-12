@@ -1,5 +1,8 @@
 #include "ParticleSystem.h"
 #include "RenderManager.h"
+#include "ScheduleInfo.h"
+#include "ScheduleManager.h"
+#include "SpriteBase.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -10,11 +13,8 @@ bool ParticleSystem::Init() {
 		return false;
 	}
 	m_objType = ObjectType::PARTICLE;
+	m_simulationFlag = false;
 	return true;
-}
-
-void ParticleSystem::Update() {
-
 }
 
 void ParticleSystem::Load(std::string _path) {
@@ -70,11 +70,7 @@ void ParticleSystem::Load(std::string _path) {
 	// シェイプ
 	{
 		object& shape				= val.get<object>()["shape"].get<object>();
-		m_shape.radius				= static_cast<float>(shape["radius"].get<double>());
-		m_shape.emitFromShell		= shape["emitFromShell"].get<bool>();
-		m_shape.alignToDirection	= shape["alignToDirection"].get<bool>();
-		m_shape.randomizeDirection  = static_cast<float>(shape["randomizeDirection"].get<double>());
-		m_shape.spherizeDirection	= static_cast<float>(shape["spherizeDirection"].get<double>());
+		LoadShapeParam(shape);
 	}
 }
 
@@ -132,9 +128,83 @@ void ParticleSystem::LoadColor(_ColorMode _color, std::string _name, object _obj
 
 }
 
+void ParticleSystem::LoadShapeParam(object _obj) {
+	object& shapeKind = _obj["shape"].get<object>();
+
+
+	m_shape.radius				 = static_cast<float>(_obj["radius"].get<double>());
+	m_shape.alignToDirection	 = _obj["alignToDirection"].get<bool>();
+	m_shape.randomizeDirection	 = static_cast<float>(_obj["randomizeDirection"].get<double>());
+	m_shape.spherizeDirection	 = static_cast<float>(_obj["spherizeDirection"].get<double>());
+
+	if (shapeKind["sphere"].get<bool>()) {
+		m_shape.emitFromShell = _obj["emitFromShell"].get<bool>();
+	}
+	else if (shapeKind["hemiSphere"].get<bool>()) {
+		m_shape.emitFromShell = _obj["emitFromShell"].get<bool>();
+	}
+	else if (shapeKind["circle"].get<bool>()) {
+		// circleパラメータセット
+		object& arcParam = _obj["arc"].get<object>();
+		m_shape.circleParam.random		= arcParam["random"].get<bool>();
+		m_shape.circleParam.loop		= arcParam["loop"].get<bool>();
+		m_shape.circleParam.pingpong	= arcParam["pingpong"].get<bool>();
+		m_shape.circleParam.burstSpeed	= arcParam["burstSpeed"].get<bool>();
+		m_shape.circleParam.arc			= static_cast<float>(arcParam["arc"].get<double>());
+		m_shape.circleParam.arcSpread	= static_cast<float>(arcParam["arcSpread"].get<double>);
+		LoadParam(m_shape.circleParam.arcSpeed, "arcSpeed", arcParam);
+	}
+}
+
 void ParticleSystem::PushParticle() {
-	auto itr = m_particle.begin();
-	for (;itr != m_particle.end();++itr) {
+	auto itr = m_particleContainer.begin();
+	for (;itr != m_particleContainer.end();++itr) {
 		RenderManager::GetInstance()->PushSprite(*itr);
 	}
+}
+
+void ParticleSystem::Update() {
+	if (!m_simulationFlag) return;
+
+
+}
+
+void ParticleSystem::StartSimulation() {
+	Clear();
+	m_simulationFlag = true;
+	SET_SCHEDULE_2(ParticleSystem::CalcTimer, 1, 1);
+	SET_SCHEDULE_2(ParticleSystem::Generate, 1, m_main.duration);
+	// Todo:カーブも実装
+	SET_SCHEDULE_2(ParticleSystem::ParticleCreate, 1, (float)(1.0f / m_emission.rateOverTime.constantMin));
+}
+
+void ParticleSystem::StopSimulation() {
+	m_simulationFlag = false;
+}
+
+// シミュレーション経過時間
+void ParticleSystem::CalcTimer() {
+	if (!m_simulationFlag) return;
+	m_timer++;
+}
+
+void ParticleSystem::Clear() {
+	ScheduleManager::GetInstance()->ReleaseScheduleOnce(ParticleSystem::CalcTimer);
+}
+
+// パーティクル発生(m_main.durationの秒数で実行)
+void ParticleSystem::Generate() {
+	/*
+	switch (m_shape)
+	{
+	default:
+		break;
+	}
+	*/
+	ParticleCreate();
+}
+
+// 粒子一つ生成
+void ParticleSystem::ParticleCreate() {
+	m_particleContainer.push_back(SpriteBase::Create());
 }

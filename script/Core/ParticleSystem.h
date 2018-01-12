@@ -46,8 +46,8 @@ struct _ColorMode {
 
 struct _ParticleMainModule
 {
-	float		duration;
-	bool		loop;
+	float		duration;						// パーティクル発生時間
+	bool		loop;							// パーティクル発生を継続するか
 	bool		prewarm;
 	_ParamMode	startDelay;
 	_ParamMode	startLifeTime;
@@ -84,12 +84,24 @@ struct _ShapeKind
 
 struct _ParticleShape
 {
-	_ShapeKind	shape;
-	float		radius;
-	bool		emitFromShell;
-	bool		alignToDirection;
-	float		randomizeDirection;
-	float		spherizeDirection;
+	_ShapeKind			shape;
+	float				radius;
+	_ShapeCircleParam	circleParam;
+	bool				emitFromShell;
+	bool				alignToDirection;
+	float				randomizeDirection;
+	float				spherizeDirection;
+};
+
+struct _ShapeCircleParam
+{
+	float		arc;
+	bool		random;
+	bool		loop;
+	bool		pingpong;
+	bool		burstSpeed;
+	float		arcSpread;
+	_ParamMode	arcSpeed;
 };
 
 class ParticleSystem : public Object
@@ -99,19 +111,27 @@ public:
 	~ParticleSystem() {};
 	bool Init();
 	CREATE_FUNC(ParticleSystem);
-	void Update();	
 	void Load(std::string _path);
 	void PushParticle();
+	void Update();
+	void StartSimulation();
+	void StopSimulation();
 private:
 	void LoadParam(_ParamMode param, std::string _name, object _obj);
 	void LoadColor(_ColorMode color, std::string _name, object _obj);
-
+	void CalcTimer();	// シュミレーション経過時間
+	void Clear();
+	void Generate();	// パーティクル発生
+	void ParticleCreate();		// パーティクル粒子一つ生成
 private:
 	_ParticleMainModule		m_main;
 	_ParticleEmissionModule m_emission;
 	_ParticleShape			m_shape;
 
-	std::vector<SpriteBase*> m_particle;
+	std::vector<SpriteBase*> m_particleContainer;
+	bool					m_simulationFlag;
+	
+	int						m_timer;
 };
 
 
