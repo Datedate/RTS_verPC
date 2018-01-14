@@ -78,8 +78,18 @@ struct _ShapeKind
 {
 	bool sphere;
 	bool hemisphere;
-	bool cone;
-	bool box;
+	bool circle;		// ２Dはほぼこれ
+};
+
+struct _ShapeCircleParam
+{
+	float		arc;
+	bool		random;
+	bool		loop;
+	bool		pingpong;
+	bool		burstSpeed;
+	float		arcSpread;
+	_ParamMode	arcSpeed;
 };
 
 struct _ParticleShape
@@ -93,16 +103,7 @@ struct _ParticleShape
 	float				spherizeDirection;
 };
 
-struct _ShapeCircleParam
-{
-	float		arc;
-	bool		random;
-	bool		loop;
-	bool		pingpong;
-	bool		burstSpeed;
-	float		arcSpread;
-	_ParamMode	arcSpeed;
-};
+
 
 class ParticleSystem : public Object
 {
@@ -119,6 +120,7 @@ public:
 private:
 	void LoadParam(_ParamMode param, std::string _name, object _obj);
 	void LoadColor(_ColorMode color, std::string _name, object _obj);
+	void LoadShapeParam(object _obj);
 	void CalcTimer();	// シュミレーション経過時間
 	void Clear();
 	void Generate();	// パーティクル発生

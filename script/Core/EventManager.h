@@ -7,6 +7,7 @@
 #include "SingletonTemplate.h"
 
 class EventListenerBase;
+class EventKeyListener;
 class InputManager;
 class Object;
 
@@ -20,6 +21,7 @@ public:
 	bool Init(HINSTANCE _hInstance, HWND _hwnd);
 	void Excute();
 	void AddEvent(EventListenerBase* _value,Object* _target);
+	void AddKeyEvent(EventKeyListener* _value, Object* _target,int keycode);
 	void Clear();
 	void Exit();
 private:

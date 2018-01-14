@@ -15,12 +15,16 @@ public:
 	static EventKeyListener* Create();
 
 	EventKeyListener* Clone();
+	void SetKeyCode(int keycode);
+	int GetKeyCode()const;
 
 	std::function<void(EventKeyInfo* _event)> m_onKeyDown;
 	std::function<void(EventKeyInfo* _event)> m_onKeyUp;
 	std::function<void(EventKeyInfo* _event)> m_onKeyPress;
 
 	bool Init();
+private:
+	int m_keycode;
 };
 
 

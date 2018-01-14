@@ -191,6 +191,7 @@ public:
 	POINT GetMousePos() {
 		return m_mousePos;
 	}
+	
 private:
 	bool InitKeyboard(HINSTANCE, HWND);
 	bool InitMouse(HINSTANCE, HWND);

@@ -62,3 +62,11 @@ bool EventKeyListener::Init() {
 
 	return false;
 }
+
+void EventKeyListener::SetKeyCode(int keycode) {
+	m_keycode = keycode;
+}
+
+int EventKeyListener::GetKeyCode() const{
+	return m_keycode;
+}

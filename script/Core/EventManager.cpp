@@ -22,6 +22,10 @@ void EventManager::AddEvent(EventListenerBase* _value , Object* _target) {
 	m_eventContainer.push_back(_value);
 }
 
+void EventManager::AddKeyEvent(EventKeyListener* _value, Object* _target, int keycode) {
+	_value->SetKeyCode(keycode);
+	AddEvent(_value, _target);
+}
 void EventManager::Excute() {
 	m_inputMng->Update();
 	if (m_eventContainer.empty()) return;
@@ -85,22 +89,28 @@ void EventManager::KeyBoardCallBack(EventListenerBase* _listener) {
 	auto listener = static_cast<EventKeyListener*>(_listener);
 
 	if (listener->m_onKeyDown != nullptr) {
-		EventKeyInfo	event(EventKeyInfo::KeyEventType::DOWN);
-		event.SetKeyState(m_inputMng->GetKeyStateTrigger());
-		event.SetTarget(listener->GetTarget());
-		listener->m_onKeyDown(&event);
+		if (m_inputMng->GetKeyboardTrigger(listener->GetKeyCode())) {
+			EventKeyInfo	event(EventKeyInfo::KeyEventType::DOWN);
+			event.SetKeyState(m_inputMng->GetKeyStateTrigger());
+			event.SetTarget(listener->GetTarget());
+			listener->m_onKeyDown(&event);
+		}
 	}
 	if (listener->m_onKeyUp != nullptr) {
-		EventKeyInfo	event(EventKeyInfo::KeyEventType::UP);
-		event.SetKeyState(m_inputMng->GetKeyStateRelease());
-		event.SetTarget(listener->GetTarget());
-		listener->m_onKeyUp(&event);
+		if (m_inputMng->GetKeyboardRelease(listener->GetKeyCode())) {
+			EventKeyInfo	event(EventKeyInfo::KeyEventType::UP);
+			event.SetKeyState(m_inputMng->GetKeyStateRelease());
+			event.SetTarget(listener->GetTarget());
+			listener->m_onKeyUp(&event);
+		}
 	}
 	if (listener->m_onKeyPress != nullptr) {
-		EventKeyInfo	event(EventKeyInfo::KeyEventType::PRESS);
-		event.SetKeyState(m_inputMng->GetKeyState());
-		event.SetTarget(listener->GetTarget());
-		listener->m_onKeyPress(&event);
+		if (m_inputMng->GetKeyboardRelease(listener->GetKeyCode())) {
+			EventKeyInfo	event(EventKeyInfo::KeyEventType::PRESS);
+			event.SetKeyState(m_inputMng->GetKeyState());
+			event.SetTarget(listener->GetTarget());
+			listener->m_onKeyPress(&event);
+		}
 	}
 }
 

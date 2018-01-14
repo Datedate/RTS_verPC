@@ -36,6 +36,10 @@ new ScheduleInfo(_FUNC_,_NUM_,_DELTA_));
 ScheduleManager::GetInstance()->ScheduleUpdate(\
 new ScheduleInfo(_FUNC_,_NUM_));
 
+#define RELEASE_SCHEDULE(_FUNC_)\
+ScheduleManager::GetInstance()->ReleaseScheduleOnce(\
+)
+
 
 class ScheduleInfo;
 
