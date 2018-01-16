@@ -19,10 +19,10 @@ SpriteBase::SpriteBase() {
 	m_pivot_y = 0.5f;
 
 	// ÉJÉâÅ[íl
-	m_color[0] = 255;
-	m_color[1] = 255;
-	m_color[2] = 255;
-	m_color[3] = 255;
+	m_color[0].r = m_color[0].g = m_color[0].b = m_color[0].a = 255;
+	m_color[1].r = m_color[1].g = m_color[1].b = m_color[1].a = 255;
+	m_color[2].r = m_color[2].g = m_color[2].b = m_color[2].a = 255;
+	m_color[3].r = m_color[3].g = m_color[3].b = m_color[3].a = 255;
 
 	// åªç›ÇÃépê®
 	m_pos.x		  = m_poly.x;
@@ -123,6 +123,24 @@ void SpriteBase::UVCut(float _left, float _top, float _width, float _height) {
 	m_uv.wid  = _width;
 	m_uv.hei  = _height;
 }
+
+void SpriteBase::SetColor(float r, float g, float b) {
+	for (int i = 0;i < 4;++i) {
+		m_color[i].r = r;
+		m_color[i].g = g;
+		m_color[i].b = b;
+	}
+}
+
+void SpriteBase::SetColor(float r, float g, float b,float a) {
+	for (int i = 0;i < 4;++i) {
+		m_color[i].r = r;
+		m_color[i].g = g;
+		m_color[i].b = b;
+		m_color[i].a = a;
+	}
+}
+
 void SpriteBase::SetAlpha(float _alpha) {
 	m_alpha = _alpha;
 }
@@ -143,6 +161,7 @@ void SpriteBase::Trans(float _transX, float _transY) {
 	m_transAmount.x = _transX;
 	m_transAmount.y = _transY;
 	m_transAmount.z = 0.0f;
+	m_pos.x += m_transAmount.x; m_pos.y += m_transAmount.y;
 }
 void SpriteBase::Rotation(float _angleZ) {
 	m_angleAmount.x = 0;
@@ -158,7 +177,7 @@ void SpriteBase::MakeWorldMatrix() {
 	D3DXMATRIX matx, maty,matz,matrotation, mattrans , matscale;
 
 	// ïœâªó Çåªç›ÇÃépê®Ç…îΩâf
-	m_transAmount.x += m_pos.x; m_transAmount.y += m_pos.y;
+	m_transAmount.x = m_pos.x; m_transAmount.y = m_pos.y;
 	m_angleAmount.z += m_angle;
 	m_scaleAmount.x += m_size.width - 1; m_scaleAmount.y += m_size.height - 1;
 
@@ -175,7 +194,7 @@ void SpriteBase::MakeWorldMatrix() {
 	m_world *= matscale * matrotation * mattrans ;								// äeçsóÒçáê¨
 	
 	// ïœâªó èâä˙âª
-	m_pos.x		  = m_transAmount.x; m_pos.y = m_transAmount.y;
+	//m_pos.x		  = m_transAmount.x; m_pos.y = m_transAmount.y;
 	m_angle		  = m_angleAmount.z;
 	m_size.width  = m_scaleAmount.x; m_size.height = m_scaleAmount.y;
 	

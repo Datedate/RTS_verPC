@@ -186,38 +186,43 @@ void RenderManager::InStreamVertex() {
 	m_lpd3ddevice->SetStreamSource(0, m_lpvxBuff, 0, sizeof(float) * 5);
 	m_lpd3ddevice->SetVertexDeclaration(m_lpdecl);
 
-	for (;sprite != m_drawList.end() ;sprite++) {
+	for (;sprite != m_drawList.end();sprite++) {
 		SpriteBase* sp = (*sprite);
 		if (!sp->IsDrawFlag()) continue;
 		sp->MakeWorldMatrix();
 
 		// スプライトが使用するシェーダーを取得
 		auto shaderData = shaderMng->GetEffectInfo(sp->GetEffectID());
-		if (shaderData == NULL)
-			MessageBox(nullptr, "ShaderManager->GetEffectInfo", "NULL来た", MB_OK);
+		if (shaderData == NULL){
+			//MessageBox(nullptr, "ShaderManager->GetEffectInfo", "NULL来た", MB_OK);
+		}
+		else {
+			// テクニックの選択
+			shaderData->effect->SetTechnique(shaderData->tech.c_str());
+			// 独自シェーダー切り替え
+			UINT numPass;
+			shaderData->effect->Begin(&numPass, 0);
+			shaderData->effect->BeginPass(0);
 
-		// テクニックの選択
-		shaderData->effect->SetTechnique(shaderData->tech.c_str());
-		// 独自シェーダー切り替え
-		UINT numPass;
-		shaderData->effect->Begin(&numPass, 0);
-		shaderData->effect->BeginPass(0);
+			shaderData->effect->SetMatrix(shaderData->matProjection.c_str(), &m_projection2D);
+			shaderData->effect->SetMatrix(shaderData->matWorld.c_str(), &sp->GetMatrix());
+			shaderData->effect->SetTexture("g_Texture", sp->GetTexture());
+			shaderData->effect->SetFloat("uv_left", sp->getUV().left);
+			shaderData->effect->SetFloat("uv_top", sp->getUV().top);
+			shaderData->effect->SetFloat("uv_width", sp->getUV().hei);
+			shaderData->effect->SetFloat("uv_height", sp->getUV().wid);
+			shaderData->effect->SetFloat("color_r", sp->GetColor()->r);
+			shaderData->effect->SetFloat("color_g", sp->GetColor()->g);
+			shaderData->effect->SetFloat("color_b", sp->GetColor()->b);
+			shaderData->effect->SetFloat("alpha", sp->GetAlpha());
+			shaderData->effect->SetFloat("pivot_x", sp->getPivotX());
+			shaderData->effect->SetFloat("pivot_y", sp->getPivotY());
+			shaderData->effect->CommitChanges();
 
-		shaderData->effect->SetMatrix(shaderData->matProjection.c_str(), &m_projection2D);
-		shaderData->effect->SetMatrix(shaderData->matWorld.c_str(), &sp->GetMatrix());
-		shaderData->effect->SetTexture("g_Texture", sp->GetTexture());
-		shaderData->effect->SetFloat("uv_left"	  , sp->getUV().left);
-		shaderData->effect->SetFloat("uv_top"	  , sp->getUV().top);
-		shaderData->effect->SetFloat("uv_width"	  , sp->getUV().hei);
-		shaderData->effect->SetFloat("uv_height"  , sp->getUV().wid);
-		shaderData->effect->SetFloat("alpha"	  , sp->GetAlpha());
-		shaderData->effect->SetFloat("pivot_x"	  , sp->getPivotX());
-		shaderData->effect->SetFloat("pivot_y"	  , sp->getPivotY());
-		shaderData->effect->CommitChanges();
+			m_lpd3ddevice->DrawPrimitive(D3DPT_TRIANGLEFAN, 0, 2);
 
-		m_lpd3ddevice->DrawPrimitive(D3DPT_TRIANGLEFAN, 0 ,2);
-
-		shaderData->effect->EndPass();
-		shaderData->effect->End();
+			shaderData->effect->EndPass();
+			shaderData->effect->End();
+		}
 	}
 }

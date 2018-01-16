@@ -19,6 +19,20 @@ struct UV {
 	float wid, hei;
 };
 
+struct Color
+{
+	float r;
+	float g;
+	float b;
+	float a;
+};
+
+struct VertexInfo
+{
+	float		x, y, z;						// 座標
+	Color		color;
+	float		tu, tv;							// テクスチャ値
+};
 class SpriteBase:public Object
 {
 public:
@@ -36,6 +50,8 @@ public:
 	void SetEffectID(DWORD _id);
 	bool CreateTex(std::string _texName);
 	void UVCut(float _left, float _top, float _width, float _height);
+	void SetColor(float r, float g, float b);
+	void SetColor(float r, float g, float b, float a);
 	void SetAlpha(float _alpha);
 	void Move(float _x, float _y);
 	bool InRange(float _x, float _y);
@@ -51,7 +67,7 @@ public:
 	D3DXMATRIX GetMatrix() const{
 		return m_world;
 	}
-	int* GetColor(){
+	Color* GetColor(){
 		return (m_color);
 	}
 	float GetAlpha()const {
@@ -62,11 +78,11 @@ public:
 	UV getUV()const;
 	LPDIRECT3DTEXTURE9 GetTexture()const;
 
-private:
+protected:
 	Poly					m_poly;
 	UV						m_uv;
 	float					m_pivot_x, m_pivot_y;
-	int						m_color[4];
+	Color					m_color[4];
 	
 	LPDIRECT3DTEXTURE9		m_tex;
 	bool					m_drawFlag;

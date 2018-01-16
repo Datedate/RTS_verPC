@@ -10,12 +10,6 @@
 class SpriteBase;
 class LayerBase;
 
-struct VertexInfo
-{
-	float		x, y, z;						// 座標
-	float		tu, tv;							// テクスチャ値
-};
-
 class RenderManager :public SingletonTemplate<RenderManager>
 {
 public:
