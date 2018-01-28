@@ -81,6 +81,8 @@ void ParticleSystem::Load(std::string _path) {
 		object& shape				= val.get<object>()["shape"].get<object>();
 		LoadShapeParam(shape);
 	}
+
+	SetCircleMode();
 }
 
 void ParticleSystem::LoadParam(_ParamMode* _param, std::string _name, object _obj) {
@@ -165,6 +167,26 @@ void ParticleSystem::LoadShapeParam(object _obj) {
 	}
 }
 
+void ParticleSystem::SetCircleMode() {
+	// Todo:
+	m_circleMode.SetArc(m_shape.circleParam.arc);
+	if (m_shape.circleParam.random) {
+		m_circleMode.Init(MODE::RANDOM);
+	}
+	else if (m_shape.circleParam.loop) {
+		m_circleMode.Init(MODE::LOOP);
+		m_circleMode.SetInterval(m_shape.circleParam.arcSpread);
+		m_circleMode.SetSpeed(m_shape.circleParam.arcSpeed.constantMax);
+	}
+	else if (m_shape.circleParam.pingpong) {
+		m_circleMode.Init(MODE::PINGPONG);
+		m_circleMode.SetInterval(m_shape.circleParam.arcSpread);
+		m_circleMode.SetSpeed(m_shape.circleParam.arcSpeed.constantMax);
+	}
+	else if (m_shape.circleParam.burstSpeed) {
+	}
+}
+
 void ParticleSystem::PushParticle() {
 	auto itr = m_particleContainer.begin();
 	for (;itr != m_particleContainer.end();++itr) {
@@ -180,17 +202,19 @@ void ParticleSystem::Update() {
 	for (;itr != m_particleContainer.end();itr++) {
 		(*itr)->Update();
 	}
+
+	Generate();
+	m_circleMode.AddAngle();
+	Generate();
+	m_circleMode.AddAngle();
+	Generate();
+	m_circleMode.AddAngle();
 }
 
 void ParticleSystem::StartSimulation() {
 	if (m_simulationFlag) return;
 	Clear();
 	m_simulationFlag = true;
-	SET_SCHEDULE_M2(ParticleSystem::CalcTimer, 1, 1);
-	SET_SCHEDULE_M2(ParticleSystem::Generate, 1, m_main.duration);
-	// Todo:カーブも実装
-	//SET_SCHEDULE_M2(ParticleSystem::ParticleCreate, 1, (float)(1.0f / m_emission.rateOverTime.constantMin));
-	OneTimeParticleCreate(m_emission.rateOverTime.constantMin);
 	SET_UPDATE(ParticleSystem);
 }
 
@@ -198,86 +222,77 @@ void ParticleSystem::StopSimulation() {
 	m_simulationFlag = false;
 }
 
-// シミュレーション経過時間
-void ParticleSystem::CalcTimer() {
-	if (!m_simulationFlag) return;
-	if (m_particleContainer.empty()) return;
-
-	auto itr = m_particleContainer.begin();
-	for (;itr != m_particleContainer.end();itr++) {
-		(*itr)->SubLife(-1);
-		if ((*itr)->GetLife() <= 0) {
-	//		delete (*itr);
-			
-		}
-	}
-
-	m_timer++;
-}
-
 void ParticleSystem::Clear() {
 	//ScheduleManager::GetInstance()->ReleaseScheduleOnce(ParticleSystem::CalcTimer);
 }
 
-// パーティクル発生(m_main.durationの秒数で実行)
+// パーティクル発生
 void ParticleSystem::Generate() {
-
-	ParticleCreate();
-}
-
-// 一秒間に何個のパーティクルを発生させるか
-void ParticleSystem::OneTimeParticleCreate(int _num) {
-	int oneTimetoParticles = _num / 60;
-	
-	if (oneTimetoParticles == 0) {
-		SET_SCHEDULE_M2(ParticleSystem::ParticleCreate, 1, (float)(1.0f / _num));
-		return;
-	}
-
-	int remaining = _num - oneTimetoParticles * 60;
-
-	float delay = (float)(1 / oneTimetoParticles);
-	for (int i = 0;i < oneTimetoParticles;++i) {
-		SET_SCHEDULE_M3(ParticleSystem::ParticleCreate, 1, (float)(1.0f / 60),delay * i);
-	}
-
-	if (remaining != 0) {
-		SET_SCHEDULE_M2(ParticleSystem::ParticleCreate, 1, (float)(1.0f / remaining));
+	if (m_circleMode.IsCreate()) {
+		ParticleCreate();
 	}
 }
 
 // 粒子一つ生成
 void ParticleSystem::ParticleCreate() {
-	Particle* pa = Particle::Create();
-	pa->CreateTex("particle_01.png");
-	pa->SetColor(m_main.startColor.colorMin.r,
-		m_main.startColor.colorMax.g,
-		m_main.startColor.colorMax.b,
-		m_main.startColor.colorMax.a);
-	pa->SetEffectID(FXID_EFFECT);
-	pa->Trans(m_centerPos.x, m_centerPos.y);
-	ParticleInitVector(pa);
-	m_particleContainer.push_back(pa);
-}
-/*
-void ParticleSystem::ParticleCreate(float x, float y) {
-	SpriteBase* sp = SpriteBase::Create();
-	sp->CreateTex("particle_01.png");
-	sp->SetEffectID(FXID_EFFECT);
-	sp->Trans(x, y);
-	m_particleContainer.push_back(sp);
-}
-*/
-
-void ParticleSystem::ParticleInitVector(Particle* sp) {
 	
+		Particle* pa = Particle::Create();
+		pa->CreateTex("tama_02.png");
+		pa->SetColor(m_main.startColor.colorMin.r,
+			m_main.startColor.colorMax.g,
+			m_main.startColor.colorMax.b,
+			m_main.startColor.colorMax.a);
+		pa->SetEffectID(FXID_EFFECT);
+		pa->Trans(m_centerPos.x, m_centerPos.y);
+		pa->SetGravity(m_main.gravityModifier.constantMax);
+		ParticleInitVector(pa);
+		m_particleContainer.push_back(pa);
+}
+
+// パーティクル発生時の粒子の設定
+void ParticleSystem::ParticleInitVector(Particle* pa) {
+	
+	if (m_shape.circleParam.random) {
+		ParticleInitVectorRandom(pa);
+	}
+	else if (m_shape.circleParam.loop) {
+		ParticleInitVectorLoop(pa);
+	}
+	else if (m_shape.circleParam.pingpong) {
+		ParticleInitVectorPingPong(pa);
+	}
+	else if (m_shape.circleParam.burstSpeed) {
+		ParticleInitVectorBurstSpeed(pa);
+	}
+
+	// 共通設定
+	pa->SetSpeed(m_main.startSpeed.constantMax);
+	pa->CalcDirection();
+	pa->SetLife(m_main.startLifeTime.constantMax);
+	pa->Scale(1.0f, 1.0f);
+}
+
+// Randomモードのパーティクル発生時の粒子の設定
+void ParticleSystem::ParticleInitVectorRandom(Particle* pa) {
 	std::random_device rd;
 	std::mt19937 mt(rd());
 	std::uniform_int_distribution<> rand360(0, m_shape.circleParam.arc);
 
-	sp->SetAngle(rand360(mt));
-	sp->SetSpeed(m_main.startSpeed.constantMax);
-	sp->CalcDirection();
-	sp->SetLife(m_main.startLifeTime.constantMax);
-	sp->Scale(0.5f, 0.5f);
+	pa->SetAngle(rand360(mt));
+}
+
+// Loopモード時のパーティクル発生時の粒子の設定
+void ParticleSystem::ParticleInitVectorLoop(Particle* pa) {
+	pa->SetAngle(m_circleMode.GetAngle());
+}
+
+// PingPongモードのパーティクル発生時の粒子の設定
+void ParticleSystem::ParticleInitVectorPingPong(Particle* pa) {
+	pa->SetAngle(m_circleMode.GetAngle());
+}
+
+// BurstSpeedモードのパーティクル発生時の粒子の設定
+void ParticleSystem::ParticleInitVectorBurstSpeed(Particle* pa) {
+	// Todo:
+
 }

@@ -22,6 +22,10 @@ float uv_top;
 float uv_width;
 float uv_height;
 float alpha;
+float color_r;
+float color_g;
+float color_b;
+
 
 float pivot_x;
 float pivot_y;
@@ -29,7 +33,10 @@ float pivot_y;
 // 指定UVのディフューズカラーを取得する
 float4 getDiffuseColor(float2 uv) {
 	float4 color = tex2D(texSampler, uv);
-	color.a *= alpha;
+	color.r = color.r * color_r;
+	color.g = color.g * color_g;
+	color.b = color.b * color_b;
+	color.a *= color.a * alpha;
 	return color;
 	//return tex2D(texSampler, uv);			// テクスチャ有り
 //	return float4(1.0f, 0.0f, 0.0f, 0.15f);	// テクスチャ無し

@@ -123,7 +123,7 @@ void RenderManager::Exit() {
 void RenderManager::Render() {
 	SortLayerInSprite();
 
-	m_lpd3ddevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+	m_lpd3ddevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(20, 20, 100), 1.0f, 0);
 	m_lpd3ddevice->BeginScene();
 
 	// スプライト描画

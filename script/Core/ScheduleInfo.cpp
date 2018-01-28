@@ -52,9 +52,9 @@ void ScheduleInfo::Exec() {
 
 	if (m_delaytime != 0) {
 		auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(nowTime - m_delaytimeStart);
-		char buf[512] = "";
-		sprintf(buf, "%d", (int)elapsedTime.count()/1000);
-		DebugSystem::GetInstance()->Push(buf, 10, 10);
+		//char buf[512] = "";
+		//sprintf(buf, "%d", (int)elapsedTime.count()/1000);
+		//DebugSystem::GetInstance()->Push(buf, 10, 10);
 		if (m_delaytime*1000 > elapsedTime.count())
 			return;
 

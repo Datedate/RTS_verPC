@@ -5,6 +5,7 @@
 #include "picojson.h"
 #include "../Core/Object.h"
 #include "ParticleParam.h"
+#include "PartSysmCircleMode.h"
 #include "Rectangle.h"
 
 using namespace picojson;
@@ -28,13 +29,19 @@ private:
 	void LoadParam(_ParamMode* param, std::string _name, object _obj);
 	void LoadColor(_ColorMode* color, std::string _name, object _obj);
 	void LoadShapeParam(object _obj);
+	void SetCircleMode();	//m_circleModeの設定
 	void Clear();
 	void Generate();	// パーティクル発生
-	void OneTimeParticleCreate(int num);	// 一秒間に何個のパーティクルを発生させるか
-	void CalcTimer();	// シュミレーション経過時間
+	//void OneTimeParticleCreate(int num);	// 一秒間に何個のパーティクルを発生させるか
+	//void CalcTimer();	// シュミレーション経過時間
 	void ParticleCreate();		// パーティクル粒子一つ生成
 	void ParticleInitVector(Particle* pa);
-	//void ParticleCreate(float x, float y);
+
+	// circleの種類
+	void ParticleInitVectorRandom(Particle* pa);
+	void ParticleInitVectorLoop(Particle* pa);
+	void ParticleInitVectorPingPong(Particle* pa);
+	void ParticleInitVectorBurstSpeed(Particle* pa);
 private:
 	_ParticleMainModule		m_main;
 	_ParticleEmissionModule m_emission;
@@ -46,7 +53,7 @@ private:
 	int						m_timer;
 	Size					m_displaysize;
 	Vector2					m_centerPos;
+	PartSysmCircleMode		m_circleMode;
 };
-
 
 #endif

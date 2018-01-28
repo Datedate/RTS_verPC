@@ -73,6 +73,9 @@ public:
 	float GetAlpha()const {
 		return m_alpha;
 	}
+	Vector2 GetPos()const {
+		return m_pos;
+	}
 	float getPivotX()const;
 	float getPivotY()const;
 	UV getUV()const;
