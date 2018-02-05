@@ -1,15 +1,21 @@
-#pragma once
+#ifndef _TITLE_SCENE_H_
+#define _TITLE_SCENE_H_
 
-#include "ISceneBase.h"
+#include "../Core/SceneBase.h"
 
-class TitleScene:public ISceneBase
+class TitleLayer;
+
+class TitleScene:public SceneBase
 {
 public:
-	TitleScene() {};
-	~TitleScene() {};
-	void Init();
+	TitleScene() ;
+	~TitleScene();
+	bool Init();
 	void Update();
-	void Render();
 	void Exit();
+	CREATE_FUNC(TitleScene);
+private:
+	TitleLayer* m_mainLayer;
 };
 
+#endif

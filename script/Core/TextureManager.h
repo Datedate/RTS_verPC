@@ -10,9 +10,12 @@ class TextureManager : public SingletonTemplate<TextureManager>
 {
 public:
 	friend SingletonTemplate<TextureManager>;
-	LPDIRECT3DTEXTURE9 CreateTex(std::string _filepath)const;
+
+	LPDIRECT3DTEXTURE9 CreateTex(std::string _filepath);
+	void PolySize(std::string filepath, float* x, float* y);
+	void Release(std::string filepath);
 private:
-	TextureManager();
+	TextureManager() {};
 	~TextureManager();
 private:
 	std::map<std::string , LPDIRECT3DTEXTURE9>	m_texContainer;

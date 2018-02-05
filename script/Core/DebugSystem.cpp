@@ -29,10 +29,12 @@ void DebugSystem::Push(const std::string _buf, int _x, int _y) {
 	m_bufContainer.push_back(DEBUG_TEXT(_buf, _x, _y));
 }
 void DebugSystem::DebugDrawText() const {
-	RECT rect = {0,0,0,0};
+	RECT rect = {0,0,100,100};
 	for (auto itr = m_bufContainer.begin();itr != m_bufContainer.end();++itr) {
-		rect.left = itr->x;
-		rect.bottom = itr->y;
+		//rect.left   = itr->x;
+		//rect.top    = itr->y;
+		//rect.right  = itr->width;
+		//rect.bottom = itr->height;
 		// 文字列のサイズを計算
 		m_font->DrawText(NULL, itr->buf.c_str(), -1, &rect, DT_CALCRECT, NULL);
 		// 文字列描画（赤色）

@@ -26,6 +26,7 @@ public:
 
 	bool Init();
 	bool Init(EVENT_ID _id, const std::string& _eventName, const std::function<void(EventInfo*)>& _callback);
+	void Release();
 	void SetStatus(EVENT_ID _id, const std::string& _evnetName, const std::function<void(EventInfo*)>& _callback);
 
 	void SetEnabled(bool enabled) { m_isEnabled = enabled; }

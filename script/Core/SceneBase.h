@@ -25,6 +25,7 @@ public:
 	virtual void RemoveChild(std::string _childname)override;
 	virtual void OnDebugMode();
 	virtual void OffDebugMode();
+	virtual void Exit() override;
 protected:
 	CameraBase*	m_camera;
 	LightBase*	m_light;

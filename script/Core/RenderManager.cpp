@@ -80,9 +80,9 @@ bool RenderManager::Init(HWND hwnd, bool fullscreenflag, int width, int height) 
 
 	D3DXMATRIX proj(
 		2.0f / width, 0.0f, 0.0f, 0.0f,
-		0.0f, 2.0f / height, 0.0f, 0.0f,
+		0.0f, -2.0f / height, 0.0f, 0.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
-		-1.0f, -1.0f, 0.0f, 1.0f
+		-1.0f, 1.0f, 0.0f, 1.0f
 		);
 
 	m_projection2D = proj;
@@ -151,9 +151,9 @@ void RenderManager::VertexBufferToVRAM() {
 	if (m_lpvxBuff == NULL) {
 		float commonVtx[] = {
 			0.0f, 0.0f, 0.0f, 0.0f, 0.0f, // 0
-			0.0f, 1.0f, 0.0f, 0.0f, 1.0f, // 1
+			1.0f, 0.0f, 0.0f, 1.0f, 0.0f, // 1
 			1.0f, 1.0f, 0.0f, 1.0f, 1.0f, // 2
-			1.0f, 0.0f, 0.0f, 1.0f, 0.0f, // 3
+			0.0f, 1.0f, 0.0f, 0.0f, 1.0f, // 3
 		};
 		m_lpd3ddevice->CreateVertexBuffer(sizeof(commonVtx), 0, 0, D3DPOOL_MANAGED, &m_lpvxBuff, 0);
 		float *p = 0;
@@ -209,8 +209,8 @@ void RenderManager::InStreamVertex() {
 			shaderData->effect->SetTexture("g_Texture", sp->GetTexture());
 			shaderData->effect->SetFloat("uv_left", sp->getUV().left);
 			shaderData->effect->SetFloat("uv_top", sp->getUV().top);
-			shaderData->effect->SetFloat("uv_width", sp->getUV().hei);
-			shaderData->effect->SetFloat("uv_height", sp->getUV().wid);
+			shaderData->effect->SetFloat("uv_width", sp->getUV().wid);
+			shaderData->effect->SetFloat("uv_height", sp->getUV().hei);
 			shaderData->effect->SetFloat("color_r", sp->GetColor()->r);
 			shaderData->effect->SetFloat("color_g", sp->GetColor()->g);
 			shaderData->effect->SetFloat("color_b", sp->GetColor()->b);

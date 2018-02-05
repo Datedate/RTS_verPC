@@ -169,7 +169,7 @@ void InputManager::UpdateMouse() {
 		for (int cnt = 0; cnt < 8; cnt++)
 		{
 			m_mouseStateTrigg.rgbButtons[cnt] = ((mouseStateOld.rgbButtons[cnt] ^ m_mouseState.rgbButtons[cnt]) & m_mouseState.rgbButtons[cnt]);
-			m_mouseStateRelea.rgbButtons[cnt] = ((mouseStateOld.rgbButtons[cnt] ^ m_mouseState.rgbButtons[cnt]) & (!m_mouseState.rgbButtons[cnt]));
+			m_mouseStateRelea.rgbButtons[cnt] = ((mouseStateOld.rgbButtons[cnt] ^ m_mouseState.rgbButtons[cnt]) & mouseStateOld.rgbButtons[cnt]);
 		}
 	}
 	else
@@ -204,7 +204,7 @@ bool InputManager::GetKeyboardPress(int _key) {
 	return ((m_keyState[_key] & 0x80) != 0);
 }
 bool InputManager::GetKeyboardTrigger(int _key) {
-	return ((m_keyState[_key] & 0x80) != 0);
+	return ((m_keyStateTrigg[_key] & 0x80) != 0);
 }
 bool InputManager::GetKeyboardRelease(int _key) {
 	return ((m_keyStateRelea[_key] & 0x80) != 0);

@@ -35,7 +35,10 @@ void PartSysmCircleMode::AddAngle() {
 }
 
 bool PartSysmCircleMode::IsCreate() {
-	
+	if (m_intervalAngle == 0) {
+		return true;
+	}
+
 	int angle = m_nowAngle * 1000;
 	int angleinterval = m_intervalAngle * 1000;
 	if (angle % angleinterval == 0)

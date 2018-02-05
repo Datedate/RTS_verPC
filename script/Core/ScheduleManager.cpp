@@ -39,6 +39,15 @@ void ScheduleManager::SetUpdate(const std::function<void()>& _update) {
 	auto info = new ScheduleInfo(_update);
 	m_updaterContainer.push_back(info);
 }
+
+void ScheduleManager::EndUpdate(const std::function<void()>& _update) {
+	auto itr = m_updaterContainer.begin();
+	for (; itr !=m_updaterContainer.end(); itr++)
+	{
+		//if( (*itr)->GetFunction() == _update )
+	}
+}
+
 void ScheduleManager::ScheduleUpdate(ScheduleInfo* _scheduleInfo) {
 	m_scheduleContainer.push_back(_scheduleInfo);
 }

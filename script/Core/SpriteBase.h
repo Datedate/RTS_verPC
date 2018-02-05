@@ -53,6 +53,11 @@ public:
 	void SetColor(float r, float g, float b);
 	void SetColor(float r, float g, float b, float a);
 	void SetAlpha(float _alpha);
+	void SetPos(float x, float y);
+	void SetSize(float x, float y);
+	void SetUVScaler(float uv_width, float uv_height);
+	void SetAnimCnt(unsigned int _cnt);
+	void SetAngle(float angle);
 	void Move(float _x, float _y);
 	bool InRange(float _x, float _y);
 
@@ -88,9 +93,12 @@ protected:
 	Color					m_color[4];
 	
 	LPDIRECT3DTEXTURE9		m_tex;
+	std::string				m_texName;
 	bool					m_drawFlag;
 	float					m_alpha;
 	DWORD					m_effectID;
+	int						m_anmCntMax;
+	int						m_anmCnt;
 	
 	// åªç›ÇÃépê®
 	Vector2					m_pos;
@@ -106,4 +114,70 @@ protected:
 	RenderManager*			pRenderMng;
 };
 
+
+/*
+class RenderManager;
+
+struct UV {
+	float left;
+	float top;
+	float wid, hei;
+};
+
+struct Color
+{
+	float r;
+	float g;
+	float b;
+	float a;
+};
+
+struct VertexInfo
+{
+	float		x, y, z;						// ç¿ïW
+	Color		color;
+	float		tu, tv;							// ÉeÉNÉXÉ`ÉÉíl
+};
+
+class SpriteBase :public Object
+{
+public:
+	static const int VERTEX_NUM;
+	static SpriteBase* Create();
+	static SpriteBase* Create(std::string _name);
+	SpriteBase();
+	SpriteBase(std::string _name);
+	~SpriteBase();
+
+	bool Init();
+	void SetPos(float x, float y);
+	void SetSize(float width,float height);
+	void SetRect(float x, float y, float width, float height);
+
+	void Update();
+	void SetDrawFlag(bool _flag);
+	bool IsDrawFlag();
+	//void SetEffectID(DWORD _id);
+	//bool CreateTex(std::string _texName);
+	//void UVCut(float _left, float _top, float _width, float _height);
+	//void SetColor(float r, float g, float b);
+	void SetColor(float r, float g, float b, float a);
+	//void SetAlpha(float _alpha);
+	//void Move(float _x, float _y);
+	//bool InRange(float _x, float _y);
+
+	//void Trans(float _transX, float _transY);			// ïΩçsà⁄ìÆ
+	//void Rotation(float _angleZ);						// âÒì]
+	//void Scale(float _scaleX, float _scaleY);			// ägèk
+	
+protected:
+	UV						m_uv;
+	Rect					m_rect;
+	Color					m_color[4];
+
+	LPDIRECT3DTEXTURE9		m_tex;
+	std::string				m_texName;
+	bool					m_drawFlag;
+};
+*/
 #endif

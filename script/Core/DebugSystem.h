@@ -8,13 +8,15 @@
 
 struct DEBUG_TEXT {
 	DEBUG_TEXT(){}
-	DEBUG_TEXT(std::string _buf, int _x, int _y) {
+	DEBUG_TEXT(std::string _buf, int _x, int _y
+		) {
 		buf = _buf; 
 		x = _x;
 		y = _y;
 	}
 	std::string buf;
 	int x, y;
+	int width, height;
 };
 
 class DebugSystem : public SingletonTemplate<DebugSystem>

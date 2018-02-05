@@ -42,3 +42,7 @@ void SceneBase::OnDebugMode() {
 void SceneBase::OffDebugMode() {
 	m_debugFlag = false;
 }
+
+void SceneBase::Exit() {
+
+}

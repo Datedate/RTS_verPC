@@ -8,6 +8,8 @@
 
 #define SET_UPDATE(__TYPE__)\
 ScheduleManager::GetInstance()->SetUpdate(std::bind(&__TYPE__::Update , std::ref(*this)));
+#define END_UPDATE(__TYPE__)\
+ScheduleManager::GetInstance()->EndUpdate(std::bind(&__TYPE__::Update , std::ref(*this)));
 #define SET_SCHEDULE_M4( _FUNC_ , _NUM_ , _DELTA_ , _DELAY_ , _ORDER_)\
 ScheduleManager::GetInstance()->ScheduleUpdate(\
 new ScheduleInfo(std::bind(&_FUNC_ , std::ref(*this)),_NUM_,_DELTA_,_DELAY_ ,_ORDER_));
@@ -55,7 +57,8 @@ public:
 	bool Init();
 	void Exit();
 	void AllUpdate();
-	void SetUpdate(const std::function<void()>& _update );
+	void SetUpdate(const std::function<void()>& _update);
+	void EndUpdate(const std::function<void()>& _update);
 	void ScheduleUpdate(ScheduleInfo* _scheduleInfo);
 	void ScheduleUpdateOnce(Object*,ScheduleInfo* _scheduleInfo);
 	void ReleaseSchedule(std::function<void()> _callback);

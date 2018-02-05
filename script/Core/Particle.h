@@ -17,6 +17,7 @@ public:
 	void SetSpeed(float speed);
 	void SetLife(int life);
 	void SetGravity(float gravity);
+	void SetScale(float x, float y);
 
 	void SubLife(float sub);
 	void CalcDirection();
@@ -30,7 +31,8 @@ private:
 	float			m_an;
 	float			m_gravity;
 	float			m_time;			// 時間経過
-
+	float			m_scaleX;		// パーティクル自体の大きさ
+	float			m_scaleY;		// パーティクル自体の大きさ
 };
 
 

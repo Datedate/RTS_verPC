@@ -17,7 +17,7 @@ class ParticleSystem : public Object
 {
 public:
 	ParticleSystem() {};
-	~ParticleSystem() {};
+	~ParticleSystem() ;
 	bool Init();
 	CREATE_FUNC(ParticleSystem);
 	void Load(std::string _path);
@@ -25,6 +25,9 @@ public:
 	void Update();
 	void StartSimulation();
 	void StopSimulation();
+	bool isSimulation()const;
+	void SetScale(float x, float y);
+	void SetPos(float x, float y);
 private:
 	void LoadParam(_ParamMode* param, std::string _name, object _obj);
 	void LoadColor(_ColorMode* color, std::string _name, object _obj);
@@ -47,13 +50,16 @@ private:
 	_ParticleEmissionModule m_emission;
 	_ParticleShape			m_shape;
 
-	std::vector<Particle*> m_particleContainer;
+	std::vector<Particle*>  m_particleContainer;
 	bool					m_simulationFlag;
+	bool					m_updateFlag;
 	
 	int						m_timer;
 	Size					m_displaysize;
 	Vector2					m_centerPos;
 	PartSysmCircleMode		m_circleMode;
+	Vector2					m_scale;
+
 };
 
 #endif

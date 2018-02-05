@@ -7,7 +7,7 @@
 // マクロの定義
 //-----------------------------------------------------------------------------
 #define		NAME			"HAL大阪_AT13K720_弓達大輝"
-#define		TITLE			"ヒトダマギ"
+#define		TITLE			"コトダマギ"
 #define		SCREEN_X		646
 #define		SCREEN_Y		1136
 #define		FULLSCREEN		0				// フルスクリーンフラグ

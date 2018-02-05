@@ -115,6 +115,10 @@ void EventManager::KeyBoardCallBack(EventListenerBase* _listener) {
 }
 
 void EventManager::Clear() {
+	for (EventListenerBase* event : m_eventContainer) {
+		
+		delete event;
+	}
 	m_eventContainer.clear();
 }
 

@@ -39,11 +39,23 @@ void Object::AddChild(Object* _child, int _zorder) {
 	AddChild(_child);
 }
 
-void Object::RemoveAllChildren() {}
+void Object::RemoveAllChildren() {
+	for (Object* child : m_children) {
+		child->Release();
+		delete child;
+	}
+}
 void Object::RemoveChild() {}
 void Object::RemoveChild(std::string _childname) {}
+void Object::RemoveChild(Object* _obj) {
+	for (Object* obj : m_children) {
+		if (obj == _obj) {
+			delete _obj;
+		}
+	}
+}
 void Object::Release() {
-
+	RemoveAllChildren();
 }
 
 void Object::SetParent(Object* _parent) {

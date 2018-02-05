@@ -29,11 +29,12 @@ public:
 	virtual void RemoveAllChildren();
 	virtual void RemoveChild();
 	virtual void RemoveChild(std::string _childname);
+	virtual void RemoveChild(Object* obj);
 	virtual void Release();
 	void SetName(std::string _name) { m_name = _name; }
 	void SetZOrder(int _z) { m_zorder = _z; }
 	void SetVisible(bool _flag) { m_visible = _flag; }
-	void Exit();
+	virtual void Exit();
 
 	Object* GetParent()const;
 	bool IsVisible()const;

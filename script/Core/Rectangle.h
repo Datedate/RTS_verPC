@@ -224,7 +224,6 @@ public:
 		if (getMinY() > point.y || getMaxY() < point.y) return false;
 		return true;
 	}
-private:
 	Vector2 origin;
 	Size	size;
 };

@@ -8,8 +8,8 @@ class ParticleSystem;
 class ParticleOperationMainLayer : public LayerBase
 {
 public:
-	ParticleOperationMainLayer() {};
-	~ParticleOperationMainLayer() {};
+	ParticleOperationMainLayer();
+	~ParticleOperationMainLayer();
 
 	bool Init();
 	CREATE_FUNC(ParticleOperationMainLayer);

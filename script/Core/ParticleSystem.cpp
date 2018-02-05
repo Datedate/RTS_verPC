@@ -18,9 +18,11 @@ bool ParticleSystem::Init() {
 	}
 	m_objType = ObjectType::PARTICLE;
 	m_simulationFlag = false;
+	m_updateFlag     = false;
 	m_displaysize = RenderManager::GetInstance()->GetDisplaySize();
 	m_centerPos.Set(Vector2(m_displaysize.width / 2.0f, m_displaysize.height / 2.0f));
-
+	m_scale.x = 1.0f;
+	m_scale.y = 1.0f;
 	srand((unsigned int)time(NULL));
 
 	return true;
@@ -31,8 +33,10 @@ void ParticleSystem::Load(std::string _path) {
 	std::stringstream	strstr;
 
 	filestr.open(_path, std::ios::binary);
-	if (!filestr.is_open()) return;
-
+	if (!filestr.is_open()) {
+		MessageBox(NULL, "ParticleSystem::Load ファイルオープン失敗", "", 0);
+		return;
+	}
 	strstr << filestr.rdbuf();
 	filestr.close();
 
@@ -188,10 +192,19 @@ void ParticleSystem::SetCircleMode() {
 }
 
 void ParticleSystem::PushParticle() {
+	//if (!m_simulationFlag) return;
+
 	auto itr = m_particleContainer.begin();
-	for (;itr != m_particleContainer.end();++itr) {
-		if((*itr)->GetLife() > 0)
+	for (;itr != m_particleContainer.end();) {
+		if ((*itr)->GetLife() >= 0.0f) {
 			RenderManager::GetInstance()->PushSprite(*itr);
+			itr++;
+		}
+		else {
+			(*itr)->Exit();
+			delete (*itr);
+			itr = m_particleContainer.erase(itr);
+		}
 	}
 }
 
@@ -203,23 +216,43 @@ void ParticleSystem::Update() {
 		(*itr)->Update();
 	}
 
-	Generate();
-	m_circleMode.AddAngle();
-	Generate();
-	m_circleMode.AddAngle();
-	Generate();
-	m_circleMode.AddAngle();
+	for (int i = 0;i < m_emission.rateOverTime.constantMax / 60+1 ;i++) {
+		Generate();
+		m_circleMode.AddAngle();
+	}
+	//Generate();
+	//m_circleMode.AddAngle();
+	//Generate();
+	//m_circleMode.AddAngle();
 }
 
 void ParticleSystem::StartSimulation() {
 	if (m_simulationFlag) return;
 	Clear();
 	m_simulationFlag = true;
-	SET_UPDATE(ParticleSystem);
+	if (!m_updateFlag) {
+		SET_UPDATE(ParticleSystem);
+		m_updateFlag = true;
+	}
 }
 
 void ParticleSystem::StopSimulation() {
 	m_simulationFlag = false;
+	m_particleContainer.clear();
+}
+
+bool ParticleSystem::isSimulation()const{
+	return m_simulationFlag;
+}
+
+void ParticleSystem::SetScale(float x, float y) {
+	m_scale.x = x;
+	m_scale.y = y;
+}
+
+void ParticleSystem::SetPos(float x, float y) {
+	m_centerPos.x = x;
+	m_centerPos.y = y;
 }
 
 void ParticleSystem::Clear() {
@@ -237,13 +270,14 @@ void ParticleSystem::Generate() {
 void ParticleSystem::ParticleCreate() {
 	
 		Particle* pa = Particle::Create();
-		pa->CreateTex("tama_02.png");
+		pa->CreateTex("Particle/tama_01.png");
 		pa->SetColor(m_main.startColor.colorMin.r,
 			m_main.startColor.colorMax.g,
 			m_main.startColor.colorMax.b,
 			m_main.startColor.colorMax.a);
+		pa->SetAlpha(0.6f);
+		pa->SetPos(m_centerPos.x,m_centerPos.y);
 		pa->SetEffectID(FXID_EFFECT);
-		pa->Trans(m_centerPos.x, m_centerPos.y);
 		pa->SetGravity(m_main.gravityModifier.constantMax);
 		ParticleInitVector(pa);
 		m_particleContainer.push_back(pa);
@@ -269,6 +303,7 @@ void ParticleSystem::ParticleInitVector(Particle* pa) {
 	pa->SetSpeed(m_main.startSpeed.constantMax);
 	pa->CalcDirection();
 	pa->SetLife(m_main.startLifeTime.constantMax);
+	pa->SetScale(m_scale.x, m_scale.y);
 	pa->Scale(1.0f, 1.0f);
 }
 
@@ -295,4 +330,15 @@ void ParticleSystem::ParticleInitVectorPingPong(Particle* pa) {
 void ParticleSystem::ParticleInitVectorBurstSpeed(Particle* pa) {
 	// Todo:
 
+}
+
+ParticleSystem::~ParticleSystem() {
+	for (auto itr = m_particleContainer.begin();
+		      itr != m_particleContainer.end();itr++) {
+		if ((*itr) != nullptr) {
+			delete (*itr);
+		}
+	}
+
+	m_particleContainer.clear();
 }

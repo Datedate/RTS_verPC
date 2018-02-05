@@ -33,6 +33,10 @@ public:
 	Size GetDisplaySize()const {
 		return m_displaySize;
 	}
+
+	void ClearCurrentLayer() {
+		m_layerList.clear();
+	}
 private:
 	RenderManager();
 	~RenderManager();

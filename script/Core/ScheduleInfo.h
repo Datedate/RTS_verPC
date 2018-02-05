@@ -37,6 +37,10 @@ public:
 
 	void Exec();
 	void Destroy();
+
+	const std::function<void()>& GetFunction() const{
+		return m_callback;
+	}
 private:
 	void Set(const std::function<void()>& _callback, unsigned int _num, float _delta, float _delay, int _order);
 

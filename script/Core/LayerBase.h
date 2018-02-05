@@ -18,7 +18,9 @@ public:
 	void RemoveAllChildren() override;
 	void RemoveChild(std::string _name) override;
 	void AddChild(SpriteBase* _sprite);
+	void AddChild(SpriteBase* _sprite, int order);
 	void AddChild(ParticleSystem* _particle);
+	void AddChild(ParticleSystem* _particle , int order);
 	void SortChildren();
 	void PushSpriteToRenderer();
 	void SetSize(Size _size);

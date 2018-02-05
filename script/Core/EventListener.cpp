@@ -61,3 +61,8 @@ void EventListenerBase::SetPriority(int _priority) {
 int EventListenerBase::GetdPriority() const {
 	return m_priority;
 }
+
+void EventListenerBase::Release() {
+	m_onEvent = nullptr;
+	m_target = nullptr;
+}
