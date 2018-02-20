@@ -52,7 +52,7 @@ bool TitleLayer::Init() {
 		auto target = static_cast<SpriteBase*>(info->GetTarget());
 		
 		if (target->InRange(info->GetPosition().x, info->GetPosition().y)) {
-			SceneManager::GetInstance()->ChengeScene(SCENE::MENU);
+			SceneManager::GetInstance()->ChangeScene(SCENE::MENU);
 		}
 	};
 

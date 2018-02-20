@@ -5,12 +5,14 @@
 #include "../TutorialScene/TutorialScene.h"
 #include "../DeckScene/DeckScene.h"
 #include "../LobbyScene/LobbyScene.h"
+#include "../HostRoomScene/HostRoomScene.h"
+#include "../ClientRoomScene/ClientRoomScene.h"
 #include "../BattleScene/battleScene.h"
 #include "../ParticleOperation/ParticleOperationScene.h"
 #include "ScheduleManager.h"
 #include "RenderManager.h"
 
-#define DEBUG_MODE 0
+#define DEBUG_MODE_ 0
 
 SceneManager::SceneManager()
 {
@@ -21,10 +23,11 @@ SceneManager::~SceneManager()
 }
 
 void SceneManager::Init(float _sizeWidth,float _sizeHeight) {		
-#ifdef DEBUG_MODE 
-	m_currentscene = TitleScene::Create();
-#else
+#ifdef DEBUG_MODE_ 
+	//m_currentscene = TitleScene::Create();
 	m_currentscene = ParticleOperationScene::Create();
+#else
+	
 #endif
 }
 
@@ -41,7 +44,7 @@ void SceneManager::Exit() {
 	}
 }
 
-void SceneManager::ChengeScene(SCENE s) {
+void SceneManager::ChangeScene(SCENE s) {
 	// フェード
 	m_next = s;
 }
@@ -72,6 +75,12 @@ void SceneManager::NextScene() {
 			break;
 		case LOBBY:
 			m_currentscene = LobbyScene::Create();
+			break;
+		case HOST_ROOM:
+			m_currentscene = HostRoomScene::Create();
+			break;
+		case CLIENT_ROOM:
+			m_currentscene = ClientRoomScene::Create();
 			break;
 		case BATTLE:
 			m_currentscene = BattleScene::Create();

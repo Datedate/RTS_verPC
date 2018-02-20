@@ -11,6 +11,8 @@ enum SCENE {
 	TUTORIAL,
 	DECK,
 	LOBBY,
+	HOST_ROOM,
+	CLIENT_ROOM,
 	BATTLE,
 	DEBUG,
 	NUM
@@ -26,7 +28,7 @@ public:
 	void Init(float _sizeWidth, float _sizeHeight);
 	void Update();
 	void Exit();
-	void ChengeScene(SCENE );
+	void ChangeScene(SCENE );
 private:
 	void NextScene();
 	SceneManager();

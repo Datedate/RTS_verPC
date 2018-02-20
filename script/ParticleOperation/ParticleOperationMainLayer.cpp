@@ -20,7 +20,7 @@ bool ParticleOperationMainLayer::Init() {
 	m_particleSystem->Load("ParticleData/test.json");
   	EventKeyListener* listener = EventKeyListener::Create();
 	listener->m_onKeyDown = [](EventKeyInfo* _eventKey) {
-		SceneManager::GetInstance()->ChengeScene(SCENE::DEBUG);
+		SceneManager::GetInstance()->ChangeScene(SCENE::DEBUG);
 	};
 
 	EventKeyListener* listener2 = EventKeyListener::Create();

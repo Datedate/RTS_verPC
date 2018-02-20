@@ -220,6 +220,7 @@ void ParticleSystem::Update() {
 		Generate();
 		m_circleMode.AddAngle();
 	}
+	//m_circleMode.AddAngle();
 	//Generate();
 	//m_circleMode.AddAngle();
 	//Generate();
@@ -303,8 +304,8 @@ void ParticleSystem::ParticleInitVector(Particle* pa) {
 	pa->SetSpeed(m_main.startSpeed.constantMax);
 	pa->CalcDirection();
 	pa->SetLife(m_main.startLifeTime.constantMax);
-	pa->SetScale(m_scale.x, m_scale.y);
-	pa->Scale(1.0f, 1.0f);
+	pa->SetScale(m_scale.x , m_scale.y);
+	//pa->Scale(1.2f, 1.2f);
 }
 
 // Randomモードのパーティクル発生時の粒子の設定

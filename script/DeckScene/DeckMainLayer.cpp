@@ -133,7 +133,7 @@ bool DeckMainLayer::Init() {
 		auto target = static_cast<SpriteBase*>(info->GetTarget());
 		target->SetAnimCnt(0);
 		if (target->InRange(info->GetPosition().x, info->GetPosition().y)) {
-			SceneManager::GetInstance()->ChengeScene(SCENE::MENU);
+			SceneManager::GetInstance()->ChangeScene(SCENE::MENU);
 		}
 	};
 

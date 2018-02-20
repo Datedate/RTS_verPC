@@ -143,7 +143,7 @@ bool MenuMainLayer::Init() {
 		auto target = static_cast<SpriteBase*>(info->GetTarget());
 
 		if (target->InRange(info->GetPosition().x, info->GetPosition().y)) {
-			SceneManager::GetInstance()->ChengeScene(SCENE::TUTORIAL);
+			SceneManager::GetInstance()->ChangeScene(SCENE::TUTORIAL);
 		}
 	};
 
@@ -152,7 +152,7 @@ bool MenuMainLayer::Init() {
 		auto target = static_cast<SpriteBase*>(info->GetTarget());
 
 		if (target->InRange(info->GetPosition().x, info->GetPosition().y)) {
-			SceneManager::GetInstance()->ChengeScene(SCENE::DECK);
+			SceneManager::GetInstance()->ChangeScene(SCENE::DECK);
 		}
 	};
 
@@ -161,7 +161,7 @@ bool MenuMainLayer::Init() {
 		auto target = static_cast<SpriteBase*>(info->GetTarget());
 
 		if (target->InRange(info->GetPosition().x, info->GetPosition().y)) {
-			SceneManager::GetInstance()->ChengeScene(SCENE::LOBBY);
+			SceneManager::GetInstance()->ChangeScene(SCENE::LOBBY);
 		}
 	};
 

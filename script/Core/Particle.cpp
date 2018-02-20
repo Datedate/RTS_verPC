@@ -36,7 +36,7 @@ void Particle::SetSpeed(float speed) {
 }
 
 void Particle::SetLife(int life) {
-	m_lifeTime = life;
+	m_lifeTime = life -1;
 }
 
 void Particle::SetGravity(float gravity) {

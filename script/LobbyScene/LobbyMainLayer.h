@@ -15,7 +15,10 @@ public:
 	void Exit();
 	CREATE_FUNC(LobbyMainLayer);
 private:
-
+	SpriteBase* m_backGround;
+public:
+	SpriteBase* m_hostButton;
+	SpriteBase* m_waitButton;
 };
 
 #endif
